@@ -1,8 +1,7 @@
 import {Component, computed, inject, Signal} from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {AreaService} from '../../../../services/area-service';
-import {AreaList} from '../../../../../models/area-list';
-import {Area} from '../../../../../models/area-response';
+import {AreaList} from '../../../../models/area-list';
 import {NgStyle} from '@angular/common';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';

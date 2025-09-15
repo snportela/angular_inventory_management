@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {environment} from '../environments/environment.development';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {AreaList} from '../../models/area-list';
+import {AreaList} from '../models/area-list';
 import {toSignal} from '@angular/core/rxjs-interop';
 
 @Injectable({

@@ -16,7 +16,7 @@ export class SidebarComponent {
     {
       routeLink: 'home',
       icon: '',
-      label: 'HomeComponent',
+      label: 'Home',
     },
     {
       routeLink: 'inventario',
