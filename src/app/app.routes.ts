@@ -1,11 +1,11 @@
 import {Routes} from '@angular/router';
-import {Home} from './layouts/dashboard/pages/home/home';
+import {HomeComponent} from './layouts/dashboard/pages/home/home-component';
 import {Auth} from './layouts/auth/auth';
 import {Dashboard} from './layouts/dashboard/dashboard';
 import {AreaComponent} from './layouts/dashboard/pages/area/area-component';
-import {Category} from './layouts/dashboard/pages/category/category';
-import {Resource} from './layouts/dashboard/pages/resource/resource';
-import {Loan} from './layouts/dashboard/pages/loan/loan';
+import {CategoryComponent} from './layouts/dashboard/pages/category/category-component';
+import {ResourceComponent} from './layouts/dashboard/pages/resource/resource-component';
+import {LoanComponent} from './layouts/dashboard/pages/loan/loan-component';
 
 export const routes: Routes = [
   {
@@ -20,11 +20,11 @@ export const routes: Routes = [
     component: Dashboard,
     children: [
       {path: '', redirectTo: '/dashboard/home', pathMatch: 'full'},
-      {path: 'home', component: Home},
+      {path: 'home', component: HomeComponent},
       {path: 'areas', component: AreaComponent},
-      {path: 'categorias', component: Category},
-      {path: 'inventario', component: Resource},
-      {path: 'emprestimos', component: Loan},
+      {path: 'categorias', component: CategoryComponent},
+      {path: 'inventario', component: ResourceComponent},
+      {path: 'emprestimos', component: LoanComponent},
     ]
   }
 ];
