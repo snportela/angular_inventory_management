@@ -1,0 +1,17 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h3>Inventário VO</h3>
+  </div>
+  <ul class="nav-menu">
+    @for (item of items; track $index) {
+      <li>
+        <a
+        routerLink="{{item.routeLink}}"
+        routerLinkActive="active"
+        >
+          {{item.label}}
+        </a>
+      </li>
+    }
+  </ul>
+</nav>
