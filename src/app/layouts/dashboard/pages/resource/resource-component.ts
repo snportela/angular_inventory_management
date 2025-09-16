@@ -5,13 +5,10 @@ import {TableModule} from 'primeng/table';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
-import {JsonPipe, NgStyle} from '@angular/common';
+import {NgStyle} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {MultiSelect} from 'primeng/multiselect';
-import {Select} from 'primeng/select';
-import {Area} from '../../../../models/area-response';
 import {AreaService} from '../../../../services/area-service';
-import {AreaList} from '../../../../models/area-list';
 import {CategoryService} from '../../../../services/category-service';
 
 @Component({
@@ -23,9 +20,7 @@ import {CategoryService} from '../../../../services/category-service';
     InputText,
     NgStyle,
     FormsModule,
-    MultiSelect,
-    Select,
-    JsonPipe
+    MultiSelect
   ],
   templateUrl: './resource-component.html',
   styleUrl: './resource-component.sass'
