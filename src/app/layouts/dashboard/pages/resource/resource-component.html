@@ -2,4 +2,109 @@
   <div class="dashboard-header">
     <h2>Inventário</h2>
   </div>
+
+  <div class="dashboard-table">
+    <p-table
+    #resource_table
+    [value]="resourceList().resources"
+    stripedRows
+    [paginator]="true"
+    [rows]="2"
+    [globalFilterFields]="['name', 'area.name', 'category.name', 'status', 'useTime']"
+    [tableStyle]="{ 'min-width': '50rem'}"
+    >
+
+      <ng-template #caption>
+        <div class="flex">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input #global_filter pInputText type="text" (input)="resource_table.filterGlobal(global_filter.value, 'contains')" placeholder="Search keyword" />
+          </p-iconfield>
+        </div>
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="name">
+            Nome <p-sortIcon field="name"/>
+          </th>
+          <th pSortableColumn="area.name">
+            Área <p-sortIcon field="area.name"/>
+          </th>
+          <th pSortableColumn="category.name">
+            Categoria <p-sortIcon field="category.name"/>
+          </th>
+          <th pSortableColumn="status">
+            Status <p-sortIcon field="status"/>
+          </th>
+          <th pSortableColumn="useTime">
+            Tempo de uso <p-sortIcon field="useTime"/>
+          </th>
+          <th >Ações</th>
+        </tr>
+
+        <tr>
+          <th>
+            <p-columnFilter showMenu="false" type="text" field="name" placeholder="Type to search" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
+          </th>
+
+          <th>
+            <p-columnFilter field="area.name" matchMode="in" [showMenu]="false">
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-multiselect [(ngModel)]="selectedAreas" [options]="areas()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                </p-multiselect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+
+          <th>
+            <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-multiselect [(ngModel)]="selectedCategories" [options]="categories()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                </p-multiselect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+
+          <th>
+            <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-multiselect [(ngModel)]="selectedCategories" [options]="categories()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                </p-multiselect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+
+          <th>
+            <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-multiselect [(ngModel)]="selectedCategories" [options]="categories()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                </p-multiselect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+
+        <th></th>
+
+      </ng-template>
+
+      <ng-template #body let-resource>
+        <tr>
+          <td>{{ resource.name }}</td>
+          <td>{{ resource.area.name }}</td>
+          <td>{{ resource.category.name }}</td>
+          <td>{{ resource.status }}</td>
+          <td>{{ resource.useTime }}</td>
+          <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
+            <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
+            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+
 </div>
