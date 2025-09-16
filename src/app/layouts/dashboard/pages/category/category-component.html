@@ -1,1 +1,49 @@
-<p>category works!</p>
+<div class="category">
+  <div class="dashboard-header">
+    <h2>Categorias</h2>
+  </div>
+
+  <div class="dashboard-table">
+    <p-table
+    #category_table
+    [value]="categoryList().categories"
+    stripedRows
+    [paginator]="true"
+    [rows]="2"
+    [globalFilterFields]="['name']"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    >
+
+      <ng-template #caption>
+        <div class="flex">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input #filter_input pInputText type="text" (input)="category_table.filterGlobal(filter_input.value, 'contains')" placeholder="Pesquisar categoria" />
+          </p-iconfield>
+        </div>
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="name" style="width: 75%">
+            Nome <p-sortIcon field="name"/>
+          </th>
+          <th style="width: 25%">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-category>
+        <tr>
+          <td>{{ category.name }}</td>
+          <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
+            <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
+            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+</div>
