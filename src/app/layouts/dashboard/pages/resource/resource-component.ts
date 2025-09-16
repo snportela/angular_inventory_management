@@ -1,6 +1,6 @@
 import {Component, computed, inject, Signal} from '@angular/core';
 import {ResourceService} from '../../../../services/resource-service';
-import {ResourceList} from '../../../../models/resource-list';
+import {ResourceList} from '../../../../models/resource/resource-list';
 import {TableModule} from 'primeng/table';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';

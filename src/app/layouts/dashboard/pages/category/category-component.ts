@@ -1,6 +1,6 @@
 import {Component, computed, inject, Signal} from '@angular/core';
 import {CategoryService} from '../../../../services/category-service';
-import {CategoryList} from '../../../../models/category-list';
+import {CategoryList} from '../../../../models/category/category-list';
 import {TableModule} from 'primeng/table';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
