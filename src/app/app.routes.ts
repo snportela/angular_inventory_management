@@ -7,6 +7,7 @@ import {CategoryComponent} from './layouts/dashboard/pages/category/category-com
 import {ResourceComponent} from './layouts/dashboard/pages/resource/resource-component';
 import {LoanComponent} from './layouts/dashboard/pages/loan/loan-component';
 import {EditAreaComponent} from './layouts/dashboard/pages/edit-area-component/edit-area-component';
+import {EditCategoryComponent} from './layouts/dashboard/pages/edit-category-component/edit-category-component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,8 @@ export const routes: Routes = [
       {path: 'area', component: EditAreaComponent},
       {path: 'area/:id', component: EditAreaComponent},
       {path: 'categorias', component: CategoryComponent},
+      {path: 'category', component: EditCategoryComponent},
+      {path: 'category/:id', component: EditCategoryComponent},
       {path: 'inventario', component: ResourceComponent},
       {path: 'emprestimos', component: LoanComponent},
     ]
