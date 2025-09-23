@@ -10,12 +10,18 @@
   box-sizing: border-box
   font-family: Figtree, sans-serif
 
+a
+  text-decoration: none
+
+button
+  cursor: pointer
+
 /* Dashboard Styles */
 
 .dashboard-header
   height: 3rem
   border-bottom: 1px solid gray
-  padding: 10px
+  padding: 10px 20px
 
   h2
     color: #0f172a
@@ -25,6 +31,17 @@
   height: 90vh
   padding: 20px
 
+  .table-caption
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+.create-button
+  color: white
+  background-color: #0f172a
+  border-radius: 12px
+  padding: 10px 12px
+
 .edit-button, .delete-button
   width: 32px
   height: 32px
@@ -32,9 +49,63 @@
   border: 1px solid #0f172a
   border-radius: 6px
 
+.edit-button
+  display: flex
+  justify-content: center
+  align-items: center
+  text-decoration: none
+
   &:hover
     cursor: pointer
     background-color: lightgray
+
+.dashboard-form
+  padding: 20px
+  display: flex
+  flex-direction: column
+  gap: 16px
+  background-color: white
+  width: calc(100% - 40px)
+  margin: 20px auto
+  border: 1px solid gray
+  border-radius: 32px
+
+  .input-box
+    display: flex
+    flex-direction: column
+    gap: 8px
+
+    label
+      color: #0f172a
+      font-weight: 500
+
+    input
+      border: 1px solid gray
+      border-radius: 12px
+      font-size: 16px
+      padding: 5px 10px
+
+      &:focus
+        border: 1px solid #2a2a2c
+        outline: none
+
+  .form-buttons
+    display: flex
+    gap: 24px
+    margin: auto
+
+    button
+      border: none
+      border-radius: 12px
+      color: white
+      background-color: #0f172a
+      padding: 10px 12px
+      font-weight: 500
+      font-size: 14px
+
+      &:nth-child(2)
+        background-color: red
+
 
 
 

@@ -1,0 +1,21 @@
+<div class="edit">
+  <div class="dashboard-header">
+    <h2>{{id ? "Editar Área" : "Criar Área"}}</h2>
+  </div>
+
+  <form class="dashboard-form">
+
+    <div class="input-box">
+      <label>Nome</label>
+      <input
+      placeholder="Area"
+      />
+    </div>
+
+
+    <div class="form-buttons">
+      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
+      <button routerLink="/dashboard/areas" >Cancelar</button>
+    </div>
+  </form>
+</div>
