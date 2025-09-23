@@ -15,13 +15,14 @@
     >
 
       <ng-template #caption>
-        <div class="flex">
+        <div class="table-caption">
           <p-iconfield iconPosition="left" class="ml-auto">
             <p-inputicon>
               <i class="pi pi-search"></i>
             </p-inputicon>
             <input #global_filter pInputText type="text" (input)="resource_table.filterGlobal(global_filter.value, 'contains')" placeholder="Search keyword" />
           </p-iconfield>
+          <a routerLink="/dashboard/item" class="create-button"> + Criar </a>
         </div>
       </ng-template>
 
@@ -91,7 +92,7 @@
       </ng-template>
 
       <ng-template #body let-resource>
-        <tr>
+        <tr [routerLink]="['/dashboard/item/', resource.resourceId]" class="inventory-item">
           <td>{{ resource.name }}</td>
           <td>{{ resource.area.name }}</td>
           <td>{{ resource.category.name }}</td>

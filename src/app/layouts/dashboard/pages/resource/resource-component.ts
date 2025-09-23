@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {MultiSelect} from 'primeng/multiselect';
 import {AreaService} from '../../../../services/area-service';
 import {CategoryService} from '../../../../services/category-service';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-resource',
@@ -20,7 +21,8 @@ import {CategoryService} from '../../../../services/category-service';
     InputText,
     NgStyle,
     FormsModule,
-    MultiSelect
+    MultiSelect,
+    RouterLink
   ],
   templateUrl: './resource-component.html',
   styleUrl: './resource-component.sass'
