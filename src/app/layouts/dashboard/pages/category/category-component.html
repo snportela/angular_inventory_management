@@ -22,7 +22,7 @@
             </p-inputicon>
             <input #filter_input pInputText type="text" (input)="category_table.filterGlobal(filter_input.value, 'contains')" placeholder="Pesquisar categoria" />
           </p-iconfield>
-          <a routerLink="/dashboard/category" class="create-button"> + Criar </a>
+          <a routerLink="/dashboard/categoria" class="create-button"> + Criar </a>
         </div>
       </ng-template>
 
@@ -39,7 +39,7 @@
         <tr>
           <td>{{ category.name }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
-            <button [routerLink]="['/dashboard/category/', category.categoryId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
+            <button [routerLink]="['/dashboard/categoria/', category.categoryId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
             <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
