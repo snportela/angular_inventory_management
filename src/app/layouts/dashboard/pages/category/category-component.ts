@@ -6,6 +6,7 @@ import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {NgStyle} from '@angular/common';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-category',
@@ -14,7 +15,9 @@ import {NgStyle} from '@angular/common';
     IconField,
     InputIcon,
     InputText,
-    NgStyle
+    NgStyle,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './category-component.html',
   styleUrl: './category-component.sass'
