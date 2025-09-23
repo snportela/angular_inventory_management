@@ -8,6 +8,7 @@ import {ResourceComponent} from './layouts/dashboard/pages/resource/resource-com
 import {LoanComponent} from './layouts/dashboard/pages/loan/loan-component';
 import {EditAreaComponent} from './layouts/dashboard/pages/edit-area-component/edit-area-component';
 import {EditCategoryComponent} from './layouts/dashboard/pages/edit-category-component/edit-category-component';
+import {EditResourceComponent} from './layouts/dashboard/pages/edit-resource-component/edit-resource-component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,8 @@ export const routes: Routes = [
       {path: 'category', component: EditCategoryComponent},
       {path: 'category/:id', component: EditCategoryComponent},
       {path: 'inventario', component: ResourceComponent},
+      {path: 'item', component: EditResourceComponent},
+      {path: 'item/:id', component: EditResourceComponent},
       {path: 'emprestimos', component: LoanComponent},
     ]
   }

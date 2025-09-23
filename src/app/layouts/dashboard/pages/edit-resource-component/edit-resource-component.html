@@ -1,0 +1,88 @@
+<div class="edit">
+  <div class="dashboard-header">
+    <h2>{{id ? "Editar Recurso" : "Criar Recurso"}}</h2>
+  </div>
+
+  <form class="dashboard-form">
+
+    <div class="input-box">
+      <label>Nome do Recurso</label>
+      <input
+        placeholder="Item"
+      />
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Categoria</label>
+        <p-select [options]="categories" [filter]="true" filterBy="name" optionLabel="name" placeholder="Selecionar Categoria"></p-select>
+      </div>
+      <div class="input-box">
+        <label>Área de Conhecimento</label>
+        <p-select [options]="categories"  [filter]="true" filterBy="name" optionLabel="name" placeholder="Selecionar Área"></p-select>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <label>Descrição</label>
+      <textarea rows="3"></textarea>
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Estado de Conservação</label>
+        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Estado de Conservação"></p-select>
+      </div>
+      <div class="input-box">
+        <label>Status</label>
+        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Status"></p-select>
+      </div>
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Número do Patrimônio</label>
+        <input/>
+      </div>
+      <div class="input-box">
+        <label>Número de Série</label>
+        <input/>
+      </div>
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Ano de fabricação</label>
+        <input
+          placeholder="Exemplo: 2014 ou N/A"
+        />
+      </div>
+
+      <div class="input-box">
+        <label>Tempo de estimativa de uso</label>
+        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Estimativa"></p-select>
+      </div>
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Nota Fiscal</label>
+        <p-select [options]="categories" [filter]="true" filterBy="name" optionLabel="name" placeholder="Selecionar Nota Fiscal"></p-select>
+      </div>
+      <div class="input-box">
+        <label>Valor</label>
+        <input/>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <label>Observação</label>
+      <textarea rows="3"></textarea>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
+      <button routerLink="/dashboard/inventario" >Cancelar</button>
+    </div>
+  </form>
+</div>
