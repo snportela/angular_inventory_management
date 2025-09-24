@@ -1,0 +1,62 @@
+<div class="receipt">
+  <div class="dashboard-header">
+    <h2>Notas Fiscais</h2>
+  </div>
+
+  <div class="dashboard-table">
+    <p-table
+      #receipt_table
+      [value]="receiptList().receipts"
+      stripedRows
+      [paginator]="true"
+      [rows]="2"
+      [globalFilterFields]="['receiptNumber, supplier']"
+      [tableStyle]="{ 'min-width': '50rem' }">
+
+      <ng-template #caption>
+        <div class="table-caption">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input #filter_input pInputText type="text" (input)="receipt_table.filterGlobal(filter_input.value, 'contains')" placeholder="Search keyword" />
+          </p-iconfield>
+
+          <a routerLink="/dashboard/receipt" class="create-button"> + Criar </a>
+        </div>
+
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="receiptNumber">
+            Nota Fiscal <p-sortIcon field="receiptNumber"/>
+          </th>
+          <th pSortableColumn="price">
+            Valor<p-sortIcon field="price"/>
+          </th>
+          <th pSortableColumn="supplier">
+            Empresa<p-sortIcon field="supplier"/>
+          </th>
+          <th pSortableColumn="receiptDate">
+            Data<p-sortIcon field="receiptDate"/>
+          </th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-receipt>
+        <tr>
+          <td>{{ receipt.receiptNumber }}</td>
+          <td>{{ receipt.price }}</td>
+          <td>{{ receipt.supplier }}</td>
+          <td>{{ receipt.receiptDate }}</td>
+          <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
+            <a [routerLink]="['/dashboard/receipt/', receipt.receiptId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
+            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+

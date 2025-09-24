@@ -10,6 +10,7 @@ import {EditAreaComponent} from './layouts/dashboard/pages/edit-area-component/e
 import {EditCategoryComponent} from './layouts/dashboard/pages/edit-category-component/edit-category-component';
 import {EditResourceComponent} from './layouts/dashboard/pages/edit-resource-component/edit-resource-component';
 import {EditLoanComponent} from './layouts/dashboard/pages/edit-loan-component/edit-loan-component';
+import {ReceiptComponent} from './layouts/dashboard/pages/receipt/receipt-component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,7 @@ export const routes: Routes = [
       {path: 'emprestimos', component: LoanComponent},
       {path: 'emprestimo', component: EditLoanComponent},
       {path: 'emprestimo/:id', component: EditLoanComponent},
+      {path: 'notas-fiscais', component: ReceiptComponent},
     ]
   }
 ];
