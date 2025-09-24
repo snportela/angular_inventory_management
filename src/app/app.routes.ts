@@ -12,6 +12,7 @@ import {EditResourceComponent} from './layouts/dashboard/pages/edit-resource-com
 import {EditLoanComponent} from './layouts/dashboard/pages/edit-loan-component/edit-loan-component';
 import {ReceiptComponent} from './layouts/dashboard/pages/receipt/receipt-component';
 import {EditReceiptComponent} from './layouts/dashboard/pages/edit-receipt-component/edit-receipt-component';
+import {LoginComponent} from './layouts/auth/pages/login-component/login-component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,7 @@ export const routes: Routes = [
     component: Auth,
     children: [
       {path: '', redirectTo: '/login', pathMatch: 'full'},
+      {path: 'login', component: LoginComponent},
     ]
   },
   {
