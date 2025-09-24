@@ -1,0 +1,46 @@
+<div class="edit">
+  <div class="dashboard-header">
+    <h2>{{id ? "Editar Empréstimo" : "Criar Empréstimo"}}</h2>
+  </div>
+
+  <form class="dashboard-form">
+
+
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Nome do estudante</label>
+        <input/>
+      </div>
+
+      <div class="input-box">
+        <label>RA do estudante</label>
+        <input/>
+      </div>
+
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Data</label>
+        <p-date-picker [showTime]="true"></p-date-picker>
+      </div>
+
+      <div class="input-box">
+        <label>Status</label>
+        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Status"></p-select>
+      </div>
+    </div>
+
+    <div class="input-box">
+      <label>Observação</label>
+      <textarea rows="3"></textarea>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
+      <button routerLink="/dashboard/emprestimos" >Cancelar</button>
+    </div>
+  </form>
+</div>
+

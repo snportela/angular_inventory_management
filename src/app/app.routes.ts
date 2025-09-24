@@ -35,6 +35,8 @@ export const routes: Routes = [
       {path: 'item', component: EditResourceComponent},
       {path: 'item/:id', component: EditResourceComponent},
       {path: 'emprestimos', component: LoanComponent},
+      {path: 'emprestimo', component: EditLoanComponent},
+      {path: 'emprestimo/:id', component: EditLoanComponent},
     ]
   }
 ];
