@@ -6,6 +6,7 @@ import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {DatePipe, NgStyle} from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-loan',
@@ -15,7 +16,8 @@ import {DatePipe, NgStyle} from '@angular/common';
     InputIcon,
     InputText,
     NgStyle,
-    DatePipe
+    DatePipe,
+    RouterLink
   ],
   templateUrl: './loan-component.html',
   styleUrl: './loan-component.sass'

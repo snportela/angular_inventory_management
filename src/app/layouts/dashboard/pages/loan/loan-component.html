@@ -15,13 +15,14 @@
     >
 
       <ng-template #caption>
-        <div class="flex">
+        <div class="table-caption">
           <p-iconfield iconPosition="left" class="ml-auto">
             <p-inputicon>
               <i class="pi pi-search"></i>
             </p-inputicon>
             <input #filter_input pInputText type="text" (input)="loan_table.filterGlobal(filter_input.value, 'contains')" placeholder="Search keyword" />
           </p-iconfield>
+          <a routerLink="/dashboard/emprestimo" class="create-button"> + Criar </a>
         </div>
       </ng-template>
 
@@ -46,7 +47,7 @@
           <td>{{ loan.loanDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ loan.loanStatus }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
-            <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
+            <button [routerLink]="['/dashboard/emprestimo/', loan.loanId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
             <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
