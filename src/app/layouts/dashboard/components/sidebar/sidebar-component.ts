@@ -36,6 +36,10 @@ export class SidebarComponent {
       routeLink: 'emprestimos',
       icon: '',
       label: 'Empréstimos',
+    },{
+      routeLink: 'notas-fiscais',
+      icon: '',
+      label: 'Notas Fiscais',
     },
   ];
 
