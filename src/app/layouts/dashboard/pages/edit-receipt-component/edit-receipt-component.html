@@ -1,0 +1,40 @@
+<div class="edit">
+  <div class="dashboard-header">
+    <h2>{{id ? "Editar Nota Fiscal" : "Criar Nota Fiscal"}}</h2>
+  </div>
+
+  <form class="dashboard-form">
+
+  <div class="input-box-container">
+    <div class="input-box">
+      <label>Nº da Nota Fiscal</label>
+      <input/>
+    </div>
+
+    <div class="input-box">
+      <label>Valor</label>
+      <input/>
+    </div>
+  </div>
+
+    <div class="input-box-container">
+
+      <div class="input-box">
+        <label>Empresa</label>
+        <input/>
+      </div>
+
+      <div class="input-box">
+        <label>Data da Nota Fiscal</label>
+        <p-date-picker [showTime]="true"></p-date-picker>
+      </div>
+    </div>
+
+
+    <div class="form-buttons">
+      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
+      <button routerLink="/dashboard/notas-fiscais" >Cancelar</button>
+    </div>
+  </form>
+</div>
+

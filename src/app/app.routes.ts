@@ -11,6 +11,7 @@ import {EditCategoryComponent} from './layouts/dashboard/pages/edit-category-com
 import {EditResourceComponent} from './layouts/dashboard/pages/edit-resource-component/edit-resource-component';
 import {EditLoanComponent} from './layouts/dashboard/pages/edit-loan-component/edit-loan-component';
 import {ReceiptComponent} from './layouts/dashboard/pages/receipt/receipt-component';
+import {EditReceiptComponent} from './layouts/dashboard/pages/edit-receipt-component/edit-receipt-component';
 
 export const routes: Routes = [
   {
@@ -39,6 +40,8 @@ export const routes: Routes = [
       {path: 'emprestimo', component: EditLoanComponent},
       {path: 'emprestimo/:id', component: EditLoanComponent},
       {path: 'notas-fiscais', component: ReceiptComponent},
+      {path: 'nota-fiscal', component: EditReceiptComponent},
+      {path: 'nota-fiscal/:id', component: EditReceiptComponent},
     ]
   }
 ];
