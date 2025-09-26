@@ -13,19 +13,18 @@ import {EditLoanComponent} from './layouts/dashboard/pages/edit-loan-component/e
 import {ReceiptComponent} from './layouts/dashboard/pages/receipt/receipt-component';
 import {EditReceiptComponent} from './layouts/dashboard/pages/edit-receipt-component/edit-receipt-component';
 import {LoginComponent} from './layouts/auth/pages/login-component/login-component';
+import {authGuard} from './guards/auth-guard';
 
 export const routes: Routes = [
   {
-    path: '',
-    component: Auth,
+    path: '', component: Auth,
     children: [
       {path: '', redirectTo: '/login', pathMatch: 'full'},
       {path: 'login', component: LoginComponent},
     ]
   },
   {
-    path: 'dashboard',
-    component: Dashboard,
+    path: 'dashboard', component: Dashboard, canActivate:[authGuard],
     children: [
       {path: '', redirectTo: '/dashboard/home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
