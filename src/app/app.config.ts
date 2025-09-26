@@ -9,7 +9,8 @@ import Aura from '@primeuix/themes/aura';
 import { pt } from "primelocale/pt.json"
 
 
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {tokenInterceptor} from './interceptors/token-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient()
+    provideHttpClient(withInterceptors([tokenInterceptor]))
   ]
 };
