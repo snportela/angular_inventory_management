@@ -1,25 +1,39 @@
 <div class="login">
 
-    <form class="login-form">
+    <form [formGroup]="loginForm" class="login-form">
 
       <div class="login-title">
-        <img ngSrc="/assets/images/logo_uam.png" alt="" height="40" width="225">
+        <img ngSrc="/assets/images/logo_uam.png" priority alt="" height="38.8" width="184.4">
         <h2>Login</h2>
       </div>
 
 
       <div class="input-box">
         <label for="email">E-mail</label>
-        <input placeholder="Digite seu e-mail"/>
+        <input formControlName="email" type="email" autocomplete="true" placeholder="Digite seu e-mail"/>
+        @if(loginForm.controls['email'].touched) {
+          <div class="form-error">
+            @if (loginForm.controls['email'].errors?.['required']) {
+              <span>Campo de e-mail é obrigatório</span>
+            }
+          </div>
+        }
       </div>
       <div class="input-box">
         <label for="password">Senha</label>
-        <input placeholder="Digite sua senha"/>
+        <input formControlName="password" type="password" autocomplete="true" placeholder="Digite sua senha"/>
+        @if(loginForm.controls['password'].touched) {
+          <div class="form-error">
+            @if(loginForm.controls['password'].errors?.['required']) {
+              <span>Campo de senha é obrigatório</span>
+            }
+          </div>
+        }
       </div>
 
       <a>Esqueceu sua senha?</a>
 
-      <button type="submit">Entrar</button>
+      <button type="button" (click)="onSubmit()">Entrar</button>
     </form>
 
   <div class="login-hero">
