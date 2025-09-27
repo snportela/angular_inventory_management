@@ -6,6 +6,8 @@ import {NgStyle} from '@angular/common';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
+import {RouterLink} from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-area',
@@ -14,7 +16,8 @@ import {InputText} from 'primeng/inputtext';
     NgStyle,
     IconField,
     InputIcon,
-    InputText
+    InputText,
+    RouterLink
   ],
   templateUrl: './area-component.html',
   styleUrl: './area-component.sass'
@@ -22,6 +25,7 @@ import {InputText} from 'primeng/inputtext';
 export class AreaComponent {
 
   areaService: AreaService = inject(AreaService);
-  areaList: Signal<AreaList> = computed(() => this.areaService.areaList());
+  areaList: Signal<AreaList> = toSignal(this.areaService.getAreaList(),
+    {initialValue: {} as AreaList});
 
 }
