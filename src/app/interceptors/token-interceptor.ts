@@ -18,6 +18,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     catchError(error => {
       if (error.status === 401 || error.status === 403) {
         console.log('Login expired.')
+        localStorage.clear();
         router.navigate(['/login']);
       }
       return throwError(() => error);
