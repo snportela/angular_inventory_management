@@ -1,4 +1,4 @@
-import {Area} from './area-response';
+import {Area} from './area';
 
 export interface AreaList{
   totalItems: number,
