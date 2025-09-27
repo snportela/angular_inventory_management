@@ -3,7 +3,7 @@ import {environment} from '../environments/environment.development';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AreaList} from '../models/area/area-list';
-import {Area} from '../models/area/area-response';
+import {Area} from '../models/area/area';
 import {toSignal} from '@angular/core/rxjs-interop';
 
 @Injectable({
