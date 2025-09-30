@@ -1,4 +1,4 @@
-import {Category} from './category-reponse';
+import {Category} from './category';
 
 export interface CategoryList {
   totalItems: number,
