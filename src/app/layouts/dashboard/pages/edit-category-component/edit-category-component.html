@@ -1,20 +1,25 @@
 <div class="edit">
   <div class="dashboard-header">
-    <h2>{{id ? "Editar Categoria" : "Criar Categoria"}}</h2>
+    <h2>{{isEdit() ? "Editar Categoria" : "Criar Categoria"}}</h2>
   </div>
 
-  <form class="dashboard-form">
+  <form [formGroup]="categoryForm" class="dashboard-form">
 
     <div class="input-box">
       <label>Nome</label>
-      <input
-        placeholder="Categoria"
-      />
+      <input formControlName="name" placeholder="Categoria" />
+      @if (categoryForm.controls['name'].touched) {
+        <div class="form-error">
+          @if (categoryForm.controls['name'].errors?.['required']) {
+            <span>Nome da categoria é obrigatório</span>
+          }
+        </div>
+      }
     </div>
 
 
     <div class="form-buttons">
-      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
+      <button type="button" (click)="onSubmit()">{{isEdit() ? "Editar" : "Criar"}}</button>
       <button routerLink="/dashboard/categorias" >Cancelar</button>
     </div>
   </form>
