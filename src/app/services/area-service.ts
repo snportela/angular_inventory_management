@@ -4,7 +4,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AreaList} from '../models/area/area-list';
 import {Area} from '../models/area/area';
-import {toSignal} from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +13,8 @@ export class AreaService {
   private api_url: string = environment.API_URL;
   http: HttpClient = inject(HttpClient);
 
-  getAreaList(): Observable<AreaList> {
-    return this.http.get<AreaList>(this.api_url + '/areas');
+  getAreaList(page: number, size: number): Observable<AreaList> {
+    return this.http.get<AreaList>(`${this.api_url}/areas?page=${page}&size=${size}`);
   }
 
   getArea(id: string): Observable<Area> {

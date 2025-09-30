@@ -1,4 +1,4 @@
-import {Component, computed, inject, Signal} from '@angular/core';
+import {Component, inject, signal, Signal} from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {AreaService} from '../../../../services/area-service';
 import {AreaList} from '../../../../models/area/area-list';
@@ -8,6 +8,7 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {RouterLink} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {Paginator} from 'primeng/paginator';
 
 @Component({
   selector: 'app-area',
@@ -25,7 +26,11 @@ import {toSignal} from '@angular/core/rxjs-interop';
 export class AreaComponent {
 
   areaService: AreaService = inject(AreaService);
-  areaList: Signal<AreaList> = toSignal(this.areaService.getAreaList(),
-    {initialValue: {} as AreaList});
+  page = signal(0);
 
+  first: number = 0;
+  rows: number = 10;
+
+  areaList: Signal<AreaList> = toSignal(this.areaService.getAreaList(this.page(), this.rows),
+    {initialValue: {} as AreaList});
 }
