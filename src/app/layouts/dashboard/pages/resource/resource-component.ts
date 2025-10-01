@@ -11,6 +11,12 @@ import {MultiSelect} from 'primeng/multiselect';
 import {AreaService} from '../../../../services/area-service';
 import {CategoryService} from '../../../../services/category-service';
 import {RouterLink} from '@angular/router';
+import {toSignal} from '@angular/core/rxjs-interop';
+import {CategoryList} from '../../../../models/category/category-list';
+import {StatusPipe} from '../../../../pipes/status-pipe';
+import {resourceStatus} from '../../../../data/resource-status';
+import {useTime} from '../../../../data/use-time';
+import {UseTimePipe} from '../../../../pipes/use-time-pipe';
 
 @Component({
   selector: 'app-resource',
@@ -22,7 +28,9 @@ import {RouterLink} from '@angular/router';
     NgStyle,
     FormsModule,
     MultiSelect,
-    RouterLink
+    RouterLink,
+    StatusPipe,
+    UseTimePipe
   ],
   templateUrl: './resource-component.html',
   styleUrl: './resource-component.sass'
@@ -30,17 +38,20 @@ import {RouterLink} from '@angular/router';
 export class ResourceComponent {
 
   resourceService: ResourceService = inject(ResourceService);
+  areaService: AreaService = inject(AreaService);
+  categoryService: CategoryService = inject(CategoryService);
   resourceList: Signal<ResourceList> = computed(() => this.resourceService.resourceList());
 
-  areaService: AreaService = inject(AreaService);
-  areas: any = computed(() => this.areaService.areaList().areas);
+  page: number = 1;
+  size: number = 10;
 
-  selectedAreas!: [];
+  areas = toSignal(this.areaService.getAreaList(this.page, this.size), {initialValue: null});
 
-  categoryService: CategoryService = inject(CategoryService);
-  categories: any = computed(() => this.categoryService.categoryList().categories);
+  categories: Signal<CategoryList> = toSignal(this.categoryService.getCategoryList(this.page, this.size),
+    {initialValue: {} as CategoryList});
 
-  selectedCategories!: [];
+  status = resourceStatus;
+  useTime = useTime;
 
 
 }

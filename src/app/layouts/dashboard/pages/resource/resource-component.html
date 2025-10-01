@@ -54,7 +54,7 @@
           <th>
             <p-columnFilter field="area.name" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [(ngModel)]="selectedAreas" [options]="areas()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="areas()?.areas" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
@@ -63,25 +63,25 @@
           <th>
             <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [(ngModel)]="selectedCategories" [options]="categories()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="categories().categories" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
           </th>
 
           <th>
-            <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
+            <p-columnFilter field="status" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [(ngModel)]="selectedCategories" [options]="categories()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="status" placeholder="Any" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
           </th>
 
           <th>
-            <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
+            <p-columnFilter field="useTime" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [(ngModel)]="selectedCategories" [options]="categories()" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="useTime" placeholder="Any" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
@@ -96,8 +96,8 @@
           <td>{{ resource.name }}</td>
           <td>{{ resource.area.name }}</td>
           <td>{{ resource.category.name }}</td>
-          <td>{{ resource.status }}</td>
-          <td>{{ resource.useTime }}</td>
+          <td>{{ resource.status | status }}</td>
+          <td>{{ resource.useTime | useTime }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
             <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
