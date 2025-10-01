@@ -1,4 +1,4 @@
-import {Receipt} from './receipt-response';
+import {Receipt} from './receipt';
 
 export interface ReceiptList {
   totalItems: number,
