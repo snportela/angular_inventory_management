@@ -1,4 +1,4 @@
-import {Resource} from './resource-reponse';
+import {Resource} from './resource';
 
 export interface ResourceList {
   totalItems: number,

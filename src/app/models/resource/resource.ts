@@ -1,5 +1,5 @@
-import {Area} from '../area/area-response';
-import {Category} from '../category/category-reponse';
+import {Area} from '../area/area';
+import {Category} from '../category/category';
 
 export interface Resource {
   resourceId: string,
