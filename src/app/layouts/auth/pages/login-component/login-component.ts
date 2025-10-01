@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {LoginService} from '../../../../services/login-service';
+import {AuthService} from '../../../../services/auth-service';
 import {Login} from '../../../../models/auth/login';
 import {Router} from '@angular/router';
 
@@ -16,7 +16,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent {
 
-  loginService: LoginService = inject(LoginService);
+  authService: AuthService = inject(AuthService);
   router = inject(Router);
 
   loginForm: FormGroup = new FormGroup({
@@ -28,10 +28,10 @@ export class LoginComponent {
 
     const credentials = this.loginForm.value as Login;
 
-    this.loginService.login(credentials).subscribe({
+    this.authService.login(credentials).subscribe({
       next: (res: any) => {
         if(res.token) {
-          localStorage.setItem('token', res.token);
+          this.authService.saveToken(res.token);
           this.router.navigateByUrl('/dashboard');
         } else {
           console.log("Login failed")
