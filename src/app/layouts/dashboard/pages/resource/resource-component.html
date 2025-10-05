@@ -11,7 +11,7 @@
     [paginator]="true"
     [rows]="10"
     [globalFilterFields]="['name', 'area.name', 'category.name', 'status', 'useTime']"
-    [tableStyle]="{ 'min-width': '50rem'}"
+    [tableStyle]="{ 'min-width': '50rem', 'min-height': '5rem'}"
     >
 
       <ng-template #caption>
@@ -20,7 +20,7 @@
             <p-inputicon>
               <i class="pi pi-search"></i>
             </p-inputicon>
-            <input #global_filter pInputText type="text" (input)="resource_table.filterGlobal(global_filter.value, 'contains')" placeholder="Search keyword" />
+            <input #global_filter pInputText type="text" (input)="resource_table.filterGlobal(global_filter.value, 'contains')" placeholder="Buscar por palavra-chave" [style]="{ minWidth: '15rem'}" />
           </p-iconfield>
           <a routerLink="/dashboard/item" class="create-button"> + Criar </a>
         </div>
@@ -48,13 +48,13 @@
 
         <tr>
           <th>
-            <p-columnFilter showMenu="false" type="text" field="name" placeholder="Type to search" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
+            <p-columnFilter showMenu="false" type="text" field="name" placeholder="Buscar por nome" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
           </th>
 
           <th>
             <p-columnFilter field="area.name" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="areas()?.areas" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="areas().areas" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
@@ -63,7 +63,7 @@
           <th>
             <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="categories().categories" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="categories().categories" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
@@ -72,7 +72,7 @@
           <th>
             <p-columnFilter field="status" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="status" placeholder="Any" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="status" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
@@ -81,7 +81,7 @@
           <th>
             <p-columnFilter field="useTime" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="useTime" placeholder="Any" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}">
+                <p-multiselect [options]="useTime" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
