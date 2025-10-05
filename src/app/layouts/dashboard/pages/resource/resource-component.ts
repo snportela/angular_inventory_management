@@ -1,4 +1,4 @@
-import {Component, computed, inject, Signal} from '@angular/core';
+import {Component, inject, Signal} from '@angular/core';
 import {ResourceService} from '../../../../services/resource-service';
 import {ResourceList} from '../../../../models/resource/resource-list';
 import {TableModule} from 'primeng/table';
@@ -17,6 +17,7 @@ import {StatusPipe} from '../../../../pipes/status-pipe';
 import {resourceStatus} from '../../../../data/resource-status';
 import {useTime} from '../../../../data/use-time';
 import {UseTimePipe} from '../../../../pipes/use-time-pipe';
+import {AreaList} from '../../../../models/area/area-list';
 
 @Component({
   selector: 'app-resource',
@@ -40,18 +41,18 @@ export class ResourceComponent {
   resourceService: ResourceService = inject(ResourceService);
   areaService: AreaService = inject(AreaService);
   categoryService: CategoryService = inject(CategoryService);
-  resourceList: Signal<ResourceList> = computed(() => this.resourceService.resourceList());
 
   page: number = 1;
   size: number = 10;
 
-  areas = toSignal(this.areaService.getAreaList(this.page, this.size), {initialValue: null});
+  resourceList: Signal<ResourceList> = toSignal(this.resourceService.getResourceList(this.page, this.size), {initialValue: {} as ResourceList});
+
+  areas: Signal<AreaList> = toSignal(this.areaService.getAreaList(this.page, this.size), {initialValue: {} as AreaList});
 
   categories: Signal<CategoryList> = toSignal(this.categoryService.getCategoryList(this.page, this.size),
     {initialValue: {} as CategoryList});
 
   status = resourceStatus;
   useTime = useTime;
-
 
 }
