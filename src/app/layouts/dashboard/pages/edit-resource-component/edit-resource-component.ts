@@ -133,15 +133,18 @@ export class EditResourceComponent {
 
     if (this.isEdit()) {
       this.resourceService.updateResource(this.resourceId()!, payload).subscribe({
-        // ...
+        next: resource => console.log('Resource updated:', resource),
+        error: err => this.error.set('Failed to update resource')
       });
     } else {
       this.resourceService.createResource(payload).subscribe({
-        // ...
+        next: resource => console.log('Resource created:', resource),
+        error: err => this.error.set('Failed to create ' +
+          'resource')
       });
     }
 
-    // ...
+    this.router.navigateByUrl('/dashboard/inventario');
   }
 
 }
