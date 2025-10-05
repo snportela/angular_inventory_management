@@ -7,7 +7,7 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {RouterLink} from '@angular/router';
 import {TableModule} from 'primeng/table';
-import {NgStyle} from '@angular/common';
+import {DatePipe, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-receipt',
@@ -17,7 +17,8 @@ import {NgStyle} from '@angular/common';
     InputText,
     RouterLink,
     TableModule,
-    NgStyle
+    NgStyle,
+    DatePipe
   ],
   templateUrl: './receipt-component.html',
   styleUrl: './receipt-component.sass'
@@ -26,7 +27,10 @@ export class ReceiptComponent {
 
   receiptService: ReceiptService = inject(ReceiptService);
 
-  receiptList = toSignal(this.receiptService.getReceiptList(),
+  page: number = 1;
+  size: number = 10;
+
+  receiptList = toSignal(this.receiptService.getReceiptList(this.page, this.size),
     {initialValue: {} as ReceiptList})
 
 }

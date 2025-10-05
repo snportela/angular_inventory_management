@@ -10,7 +10,7 @@
       stripedRows
       [paginator]="true"
       [rows]="2"
-      [globalFilterFields]="['receiptNumber', 'supplier']"
+      [globalFilterFields]="['receiptNumber', 'price', 'supplier']"
       [tableStyle]="{ 'min-width': '50rem' }">
 
       <ng-template #caption>
@@ -19,7 +19,7 @@
             <p-inputicon>
               <i class="pi pi-search"></i>
             </p-inputicon>
-            <input #filter_input pInputText type="text" (input)="receipt_table.filterGlobal(filter_input.value, 'contains')" placeholder="Search keyword" />
+            <input #filter_input pInputText type="text" (input)="receipt_table.filterGlobal(filter_input.value, 'contains')" placeholder="Buscar por palavra-chave" [style]="{ minWidth: '15rem'}" />
           </p-iconfield>
 
           <a routerLink="/dashboard/nota-fiscal" class="create-button"> + Criar </a>
@@ -49,7 +49,7 @@
           <td>{{ receipt.receiptNumber }}</td>
           <td>{{ receipt.price }}</td>
           <td>{{ receipt.supplier }}</td>
-          <td>{{ receipt.receiptDate }}</td>
+          <td>{{ receipt.receiptDate | date: 'dd/MM/yyyy' }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <a [routerLink]="['/dashboard/nota-fiscal/', receipt.receiptId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
             <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
