@@ -1,88 +1,170 @@
 <div class="edit">
   <div class="dashboard-header">
-    <h2>{{id ? "Editar Recurso" : "Criar Recurso"}}</h2>
+    <h2>{{isEdit() ? "Editar Recurso" : "Criar Recurso"}}</h2>
   </div>
 
-  <form class="dashboard-form">
+  <form [formGroup]="resourceForm" class="dashboard-form">
 
     <div class="input-box">
       <label>Nome do Recurso</label>
-      <input
-        placeholder="Item"
+      <input formControlName="name"
+             placeholder="Nome do recurso"
       />
+      @if (resourceForm.controls['name'].touched) {
+        <div class="form-error">
+          @if (resourceForm.controls['name'].errors?.['required']) {
+            <span>Nome do recurso é obrigatório</span>
+          }
+        </div>
+      }
     </div>
 
     <div class="input-box-container">
       <div class="input-box">
         <label>Categoria</label>
-        <p-select [options]="categories" [filter]="true" filterBy="name" optionLabel="name" placeholder="Selecionar Categoria"></p-select>
+        <select formControlName="category">
+          <option [value]="null" disabled>Selecionar Categoria</option>
+
+          @for (category of categoryList().categories; track category.categoryId) {
+            <option [value]="category.categoryId">
+              {{ category.name }}
+            </option>
+          }
+        </select>
+        @if (resourceForm.controls['category'].touched) {
+          <div class="form-error">
+            @if (resourceForm.controls['category'].errors?.['required']) {
+              <span>Categoria do recurso é obrigatória</span>
+            }
+          </div>
+        }
       </div>
       <div class="input-box">
         <label>Área de Conhecimento</label>
-        <p-select [options]="categories"  [filter]="true" filterBy="name" optionLabel="name" placeholder="Selecionar Área"></p-select>
+        <select formControlName="area">
+          <option [value]="null" disabled>Selecionar Área</option>
+          @for (area of areaList().areas; track area.areaId) {
+            <option [value]="area.areaId">{{ area.name }}</option>
+          }
+        </select>
+        @if (resourceForm.controls['area'].touched) {
+          <div class="form-error">
+            @if (resourceForm.controls['area'].errors?.['required']) {
+              <span>Área do recurso é obrigatória</span>
+            }
+          </div>
+        }
       </div>
     </div>
 
     <div class="input-box">
       <label>Descrição</label>
-      <textarea rows="3"></textarea>
+      <textarea formControlName="description" placeholder="Descrição do recurso" rows="3"></textarea>
+      @if (resourceForm.controls['description'].touched) {
+        <div class="form-error">
+          @if (resourceForm.controls['description'].errors?.['required']) {
+            <span>Descrição do recurso é obrigatória</span>
+          }
+        </div>
+      }
     </div>
 
     <div class="input-box-container">
       <div class="input-box">
         <label>Estado de Conservação</label>
-        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Estado de Conservação"></p-select>
+        <select formControlName="repairState">
+          <option [value]="null" disabled>Selecionar Estado de Conservação</option>
+          @for (state of repairState; track state.name) {
+            <option [value]="state.name">{{ state.translation }}</option>
+          }
+        </select>
+        @if (resourceForm.controls['repairState'].touched) {
+          <div class="form-error">
+            @if (resourceForm.controls['repairState'].errors?.['required']) {
+              <span>Estado de Conservação do recurso é obrigatório</span>
+            }
+          </div>
+        }
       </div>
       <div class="input-box">
         <label>Status</label>
-        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Status"></p-select>
+        <select formControlName="status">
+          <option [value]="null" disabled>Selecionar Status</option>
+          @for (s of status; track s.name) {
+            <option [value]="s.name">{{ s.translation }}</option>
+          }
+        </select>
+        @if (resourceForm.controls['status'].touched) {
+          <div class="form-error">
+            @if (resourceForm.controls['status'].errors?.['required']) {
+              <span>Status do recurso é obrigatório</span>
+            }
+          </div>
+        }
       </div>
     </div>
 
     <div class="input-box-container">
       <div class="input-box">
         <label>Número do Patrimônio</label>
-        <input/>
+        <input formControlName="resourceNumber" />
       </div>
       <div class="input-box">
         <label>Número de Série</label>
-        <input/>
+        <input formControlName="serialNumber"/>
       </div>
     </div>
 
     <div class="input-box-container">
       <div class="input-box">
         <label>Ano de fabricação</label>
-        <input
-          placeholder="Exemplo: 2014 ou N/A"
+        <input formControlName="manufactureYear"
+               placeholder="Exemplo: 2014 ou N/A"
         />
       </div>
 
       <div class="input-box">
         <label>Tempo de estimativa de uso</label>
-        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Estimativa"></p-select>
+        <select formControlName="useTime">
+          <option [value]="null" disabled>Selecionar Estimativa</option>
+          @for (time of useTime; track time.name) {
+            <option [value]="time.name">{{ time.translation }}</option>
+          }
+        </select>
+        @if (resourceForm.controls['useTime'].touched) {
+          <div class="form-error">
+            @if (resourceForm.controls['useTime'].errors?.['required']) {
+              <span>Estimativa de uso do recurso é obrigatória</span>
+            }
+          </div>
+        }
       </div>
     </div>
 
     <div class="input-box-container">
       <div class="input-box">
         <label>Nota Fiscal</label>
-        <p-select [options]="categories" [filter]="true" filterBy="name" optionLabel="name" placeholder="Selecionar Nota Fiscal"></p-select>
+        <select formControlName="receipt">
+          <option [value]="null" disabled>Selecionar Nota Fiscal</option>
+          @for (receipt of receiptList().receipts; track receipt.receiptId) {
+            <option [value]="receipt.receiptId">{{ receipt.receiptNumber }}</option>
+          }
+        </select>
       </div>
+        <div class="input-box">
+          <label>Valor</label>
+          <input formControlName="price"/>
+        </div>
+      </div>
+
       <div class="input-box">
-        <label>Valor</label>
-        <input/>
+        <label>Observação</label>
+        <textarea formControlName="observation" rows="3"></textarea>
       </div>
-    </div>
 
-    <div class="input-box">
-      <label>Observação</label>
-      <textarea rows="3"></textarea>
-    </div>
-
-    <div class="form-buttons">
-      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
-      <button routerLink="/dashboard/inventario" >Cancelar</button>
-    </div>
+      <div class="form-buttons">
+        <button type="button" (click)="onSubmit()" >{{isEdit() ? "Editar" : "Criar"}}</button>
+        <button routerLink="/dashboard/inventario" >Cancelar</button>
+      </div>
   </form>
 </div>
