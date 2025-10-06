@@ -7,7 +7,7 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {RouterLink} from '@angular/router';
 import {TableModule} from 'primeng/table';
-import {DatePipe, NgStyle} from '@angular/common';
+import {CurrencyPipe, DatePipe, NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-receipt',
@@ -18,7 +18,8 @@ import {DatePipe, NgStyle} from '@angular/common';
     RouterLink,
     TableModule,
     NgStyle,
-    DatePipe
+    DatePipe,
+    CurrencyPipe
   ],
   templateUrl: './receipt-component.html',
   styleUrl: './receipt-component.sass'

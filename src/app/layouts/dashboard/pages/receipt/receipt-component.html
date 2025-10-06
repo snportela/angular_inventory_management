@@ -47,7 +47,7 @@
       <ng-template #body let-receipt>
         <tr>
           <td>{{ receipt.receiptNumber }}</td>
-          <td>{{ receipt.price }}</td>
+          <td>{{ receipt.price | currency: 'BRL' }}</td>
           <td>{{ receipt.supplier }}</td>
           <td>{{ receipt.receiptDate | date: 'dd/MM/yyyy' }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
