@@ -9,7 +9,7 @@
       [value]="receiptList().receipts"
       stripedRows
       [paginator]="true"
-      [rows]="2"
+      [rows]="size()"
       [globalFilterFields]="['receiptNumber', 'price', 'supplier']"
       [tableStyle]="{ 'min-width': '50rem' }">
 
@@ -52,7 +52,7 @@
           <td>{{ receipt.receiptDate | date: 'dd/MM/yyyy' }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <a [routerLink]="['/dashboard/nota-fiscal/', receipt.receiptId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
-            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+            <button class="delete-button" (click)="confirmDelete(receipt)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
       </ng-template>
