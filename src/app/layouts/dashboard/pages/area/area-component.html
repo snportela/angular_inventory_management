@@ -10,7 +10,7 @@
       stripedRows
       [paginator]="true"
       [first]="first"
-      [rows]="rows"
+      [rows]="rows()"
       [globalFilterFields]="['name']"
       [tableStyle]="{ 'min-width': '50rem' }">
 
@@ -41,7 +41,7 @@
           <td>{{ area.name }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <a [routerLink]="['/dashboard/area/', area.areaId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
-            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+            <button class="delete-button" (click)="confirmDelete(area)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
       </ng-template>

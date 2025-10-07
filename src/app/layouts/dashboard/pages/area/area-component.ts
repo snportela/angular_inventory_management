@@ -1,4 +1,4 @@
-import {Component, inject, signal, Signal} from '@angular/core';
+import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {AreaService} from '../../../../services/area-service';
 import {AreaList} from '../../../../models/area/area-list';
@@ -6,9 +6,9 @@ import {NgStyle} from '@angular/common';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {RouterLink} from '@angular/router';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {Paginator} from 'primeng/paginator';
 
 @Component({
   selector: 'app-area',
@@ -18,6 +18,7 @@ import {Paginator} from 'primeng/paginator';
     IconField,
     InputIcon,
     InputText,
+    ConfirmDialogModule,
     RouterLink
   ],
   templateUrl: './area-component.html',
@@ -26,11 +27,64 @@ import {Paginator} from 'primeng/paginator';
 export class AreaComponent {
 
   areaService: AreaService = inject(AreaService);
-  page = signal(0);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
 
   first: number = 0;
-  rows: number = 10;
+  page = signal(0);
+  rows = signal(10);
 
-  areaList: Signal<AreaList> = toSignal(this.areaService.getAreaList(this.page(), this.rows),
-    {initialValue: {} as AreaList});
+  areaList: WritableSignal<AreaList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, areas: [] });
+
+  constructor() {
+    effect(() => {
+      this.areaService.getAreaList(this.page(), this.rows()).subscribe(data => {
+        this.areaList.set(data);
+      });
+    });
+  }
+
+  // onPageChange(event: { first: number; rows: number }) {
+  //   this.page.set(event.first / event.rows);
+  //   this.rows.set(event.rows);
+  // }
+
+  confirmDelete(area: { areaId: string; name: string }): void {
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja excluir a área "${area.name}"?`,
+      header: 'Confirmar Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim, excluir',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-secondary p-button-outlined',
+
+      accept: () => {
+        this.areaService.deleteArea(area.areaId).subscribe({
+          next: () => {
+            this.areaList.update(currentState => {
+              const updatedAreas = currentState.areas.filter(a => a.areaId !== area.areaId);
+              return { ...currentState, areas: updatedAreas };
+            });
+
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: `Área "${area.name}" excluída.`,
+              life: 3000
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível excluir a área.',
+              life: 3000
+            });
+            console.error('Delete failed', err);
+          }
+        });
+      }
+    });
+  }
 }
