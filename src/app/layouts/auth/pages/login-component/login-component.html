@@ -19,6 +19,11 @@
           </div>
         }
       </div>
+
+      @if (isLoading()) {
+        <p-progress-spinner ariaLabel="loading" />
+      }
+
       <div class="input-box">
         <label for="password">Senha</label>
         <input formControlName="password" type="password" autocomplete="true" placeholder="Digite sua senha"/>
@@ -30,6 +35,12 @@
           </div>
         }
       </div>
+
+      @if (isInvalid()) {
+        <div class="form-error">
+            <p-message severity="error">Credenciais inválidas. Verifique seu usuário e senha!</p-message>
+        </div>
+      }
 
       <a>Esqueceu sua senha?</a>
 
