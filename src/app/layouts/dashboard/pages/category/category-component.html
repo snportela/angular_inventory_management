@@ -9,7 +9,7 @@
     [value]="categoryList().categories"
     stripedRows
     [paginator]="true"
-    [rows]="rows"
+    [rows]="size()"
     [globalFilterFields]="['name']"
     [tableStyle]="{ 'min-width': '50rem' }"
     >
@@ -40,7 +40,7 @@
           <td>{{ category.name }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <button [routerLink]="['/dashboard/categoria/', category.categoryId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
-            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+            <button class="delete-button" (click)="confirmDelete(category)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
       </ng-template>
