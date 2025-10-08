@@ -10,6 +10,15 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   let router = inject(Router);
   let clonedReq = req;
 
+  const excludedRoutes = [
+    '/auth/login',
+    '/auth/redeem-password',
+  ];
+
+  if (excludedRoutes.some(url => req.url.includes(url))) {
+    return next(req);
+  }
+
   if (token) {
     clonedReq = req.clone({
       setHeaders: {
@@ -20,7 +29,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(clonedReq).pipe(
     catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403)) {
+      if (error instanceof HttpErrorResponse && (error.status === 401 || error.status === 403) && token) {
         console.log('Token expired or invalid. Logging out...');
         authService.logout();
         router.navigateByUrl('/login');
