@@ -3,7 +3,7 @@ import {NgOptimizedImage} from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../../services/auth-service';
 import {Login} from '../../../../models/auth/login';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {ProgressSpinner} from 'primeng/progressspinner';
 import {Message} from 'primeng/message';
@@ -14,7 +14,8 @@ import {Message} from 'primeng/message';
     NgOptimizedImage,
     ReactiveFormsModule,
     ProgressSpinner,
-    Message
+    Message,
+    RouterLink
   ],
   templateUrl: './login-component.html',
   styleUrl: './login-component.sass'
