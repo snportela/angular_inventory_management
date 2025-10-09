@@ -1,14 +1,17 @@
 import {CanActivateFn, Router} from '@angular/router';
 import {inject} from '@angular/core';
+import {AuthService} from '../services/auth-service';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const isLoggedIn = localStorage.getItem('token');
+
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  if(isLoggedIn != null || isLoggedIn != '') {
+  if(authService.isAuthenticated() && authService.getUserRole() === 'ADMIN') {
     return true;
-  } else {
-    router.navigateByUrl('/login');
-    return false;
   }
+
+  console.warn('Access denied: User is not an admin.');
+  router.navigateByUrl('/dashboard');
+  return false;
 };

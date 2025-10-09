@@ -16,6 +16,7 @@ import {LoginComponent} from './layouts/auth/pages/login-component/login-compone
 import {authGuard} from './guards/auth-guard';
 import {RedeemPasswordComponent} from './layouts/auth/pages/redeem-password-component/redeem-password-component';
 import {ResetPasswordComponent} from './layouts/auth/pages/reset-password-component/reset-password-component';
+import {UserComponent} from './layouts/dashboard/pages/user-component/user-component';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,7 @@ export const routes: Routes = [
       {path: 'notas-fiscais', component: ReceiptComponent},
       {path: 'nota-fiscal', component: EditReceiptComponent},
       {path: 'nota-fiscal/:id', component: EditReceiptComponent},
+      {path: 'usuarios', component: UserComponent, canActivate: [authGuard]}
     ]
   }
 ];

@@ -43,8 +43,18 @@ export class SidebarComponent {
       routeLink: 'notas-fiscais',
       icon: '',
       label: 'Notas Fiscais',
-    },
+    }
   ];
+
+  constructor() {
+    if(this.authService.getUserRole() === 'ADMIN') {
+      this.items.push({
+        routeLink: 'usuarios',
+        icon: '',
+        label: 'Usuários',
+      })
+    }
+  }
 
   logout() {
     this.authService.logout();
