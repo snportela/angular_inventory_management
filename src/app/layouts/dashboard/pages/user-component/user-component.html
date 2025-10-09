@@ -1,0 +1,54 @@
+<div class="user">
+  <div class="dashboard-header">
+    <h2>Usuários</h2>
+  </div>
+
+  <div class="dashboard-table">
+    <p-table
+      #user_table
+      [value]="userList().users"
+      stripedRows
+      [paginator]="true"
+      [first]="first"
+      [rows]="size()"
+      [globalFilterFields]="['name', 'email']"
+      [tableStyle]="{ 'min-width': '50rem' }">
+
+      <ng-template #caption>
+        <div class="table-caption">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input #global_filter pInputText type="text" (input)="user_table.filterGlobal(global_filter.value, 'contains')" placeholder="Buscar por palavra-chave" [style]="{ minWidth: '15rem'}" />
+          </p-iconfield>
+
+          <a routerLink="/dashboard/usuarios" class="create-button"> + Criar </a>
+        </div>
+
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="name">
+            Nome <p-sortIcon field="name"/>
+          </th>
+          <th pSortableColumn="email">
+            E-mail <p-sortIcon field="email"/>
+          </th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-user>
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
+            <a [routerLink]="['/dashboard/usuarios/', user.userId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
+            <button class="delete-button" (click)="confirmDelete(user)"><i class="pi pi-trash" style="color: red"></i></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
