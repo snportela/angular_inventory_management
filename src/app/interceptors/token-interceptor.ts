@@ -13,6 +13,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const excludedRoutes = [
     '/auth/login',
     '/auth/redeem-password',
+    '/auth/reset-password'
   ];
 
   if (excludedRoutes.some(url => req.url.includes(url))) {

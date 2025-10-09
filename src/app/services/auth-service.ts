@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Login} from '../models/auth/login';
 import {Router} from '@angular/router';
 import {RedeemPassword} from '../models/auth/redeem-password';
+import {ResetPassword} from '../models/auth/reset-password';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,10 @@ export class AuthService {
 
   redeemPassword(email: RedeemPassword) {
     return this.http.post(`${this.auth_url}/redeem-password`, email)
+  }
+
+  resetPassword(credentials: ResetPassword) {
+    return this.http.post(`${this.auth_url}/reset-password`, credentials);
   }
 
 }

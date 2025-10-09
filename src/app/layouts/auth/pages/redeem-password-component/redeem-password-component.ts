@@ -50,7 +50,7 @@ export class RedeemPasswordComponent {
             life: 3000
           });
           this.isLoading.set(false);
-          console.error('Delete failed', error);
+          console.error(error);
         }
       });
     }

@@ -15,6 +15,7 @@ import {EditReceiptComponent} from './layouts/dashboard/pages/edit-receipt-compo
 import {LoginComponent} from './layouts/auth/pages/login-component/login-component';
 import {authGuard} from './guards/auth-guard';
 import {RedeemPasswordComponent} from './layouts/auth/pages/redeem-password-component/redeem-password-component';
+import {ResetPasswordComponent} from './layouts/auth/pages/reset-password-component/reset-password-component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,8 @@ export const routes: Routes = [
     ]
   },
   {path: 'redefinir-senha', component: RedeemPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
+  {path: 'reset-password/:token', component: ResetPasswordComponent},
   {
     path: 'dashboard', component: Dashboard,
     children: [
