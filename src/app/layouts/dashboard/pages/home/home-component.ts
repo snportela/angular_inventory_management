@@ -12,6 +12,15 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {CategoryList} from '../../../../models/category/category-list';
 import {UserService} from '../../../../services/user-service';
 import {AuthService} from '../../../../services/auth-service';
+import {Tag} from 'primeng/tag';
+import {DatePipe, NgStyle} from '@angular/common';
+import {IconField} from 'primeng/iconfield';
+import {InputIcon} from 'primeng/inputicon';
+import {InputText} from 'primeng/inputtext';
+import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
+import {LoanService} from '../../../../services/loan-service';
+import {LoanList} from '../../../../models/loan/loan-list';
+import {Divider} from 'primeng/divider';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +28,15 @@ import {AuthService} from '../../../../services/auth-service';
     RouterLink,
     TableModule,
     StatusPipe,
-    UseTimePipe
+    UseTimePipe,
+    Tag,
+    DatePipe,
+    IconField,
+    InputIcon,
+    InputText,
+    LoanStatusPipe,
+    NgStyle,
+    Divider
   ],
   templateUrl: './home-component.html',
   styleUrl: './home-component.sass'
@@ -29,6 +46,7 @@ export class HomeComponent {
   private resourceService: ResourceService = inject(ResourceService);
   private areaService: AreaService = inject(AreaService);
   private categoryService: CategoryService = inject(CategoryService);
+  loanService: LoanService = inject(LoanService);
   private userService: UserService = inject(UserService);
   private authService: AuthService = inject(AuthService);
 
@@ -40,6 +58,8 @@ export class HomeComponent {
 
   resourceList: WritableSignal<ResourceList> =  signal({currentPage: 0, totalItems: 0, totalPages: 0, resources: [] });
 
+  loanList: WritableSignal<LoanList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, loans: [] });
+
   areas: Signal<AreaList> = toSignal(this.areaService.getAreaList(this.page(), this.size()), {initialValue: {} as AreaList});
 
   categories: Signal<CategoryList> = toSignal(this.categoryService.getCategoryList(this.page(), this.size()),
@@ -50,6 +70,8 @@ export class HomeComponent {
 
     effect(() => {
       this.resourceService.getResourceList(this.page(), this.size(), 'UNDER_MAINTENANCE').subscribe(data => this.resourceList.set(data));
+
+      this.loanService.getLoanList(this.page(), this.size(), 'OVERDUE').subscribe(data => this.loanList.set(data));
 
       this.userService.getUser(userId!).subscribe(data => this.userName.set(data.name.split(" ")[0]));
     });

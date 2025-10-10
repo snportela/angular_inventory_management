@@ -3,7 +3,7 @@
     <h2>Bem vindo (a), {{userName()}} </h2>
   </div>
 
-  <div class="dashboard-table">
+  <div [ngStyle]="{'height': '45vh'}" class="dashboard-table">
     <p-table
       #resource_table
       [value]="resourceList().resources"
@@ -40,15 +40,68 @@
       </ng-template>
 
       <ng-template #body let-resource>
-        <tr [routerLink]="['/dashboard/item/', resource.resourceId]" class="inventory-item">
+        <tr [routerLink]="['/dashboard/item/', resource.resourceId]" class="linked-item">
           <td>{{ resource.name }}</td>
           <td>{{ resource.area.name }}</td>
           <td>{{ resource.category.name }}</td>
-          <td>{{ resource.status | status }}</td>
+          <td>
+            <p-tag [value]="resource.status | status" [severity]="resource.status | status: true" />
+          </td>
           <td>{{ resource.useTime | useTime }}</td>
         </tr>
       </ng-template>
 
     </p-table>
+  </div>
+
+  <div [ngStyle]="{'padding': '0 20px'}">
+    <p-divider/>
+  </div>
+
+  <div [ngStyle]="{'height': '45vh'}" class="dashboard-table">
+    <p-table
+      #loan_table
+      [value]="loanList().loans"
+      stripedRows
+      [paginator]="true"
+      [rows]="size()"
+      [globalFilterFields]="['studentName, loanStatus']"
+      [tableStyle]="{ 'min-width': '50rem' }">
+
+      <ng-template #caption>
+        <h2>Empréstimos em atraso</h2>
+      </ng-template>
+
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="studentName">
+            Estudante <p-sortIcon field="studentName"/>
+          </th>
+          <th pSortableColumn="loanDate">
+            Data-Empréstimo<p-sortIcon field="loanDate"/>
+          </th>
+          <th pSortableColumn="dueDate">
+            Data-Vencimento <p-sortIcon field="dueDate"/>
+          </th>
+          <th pSortableColumn="loanStatus">
+            Status <p-sortIcon field="loanStatus"/>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-loan>
+        <tr [routerLink]="['/dashboard/emprestimo/', loan.loanId]" class="linked-item">
+          <td>{{ loan.studentName }}</td>
+          <td>{{ loan.loanDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ loan.dueDate | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <p-tag [value]="loan.loanStatus | loanStatus" [severity]="loan.loanStatus | loanStatus: true" />
+          </td>
+        </tr>
+      </ng-template>
+
+
+    </p-table>
+
   </div>
 </div>
