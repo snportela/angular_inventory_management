@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserList} from '../models/user/user-list';
 import {User} from '../models/user/user';
+import {UserRegister} from '../models/user/user-register';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class UserService {
     return this.http.get<User>(`${this.api_url}/users/${id}`);
   }
 
-  createUser(newUser: Omit<User, 'userId'>): Observable<User> {
+  createUser(newUser: UserRegister): Observable<User> {
     return this.http.post<User>(this.api_url + '/users', newUser);
   }
 

@@ -17,6 +17,8 @@ import {authGuard} from './guards/auth-guard';
 import {RedeemPasswordComponent} from './layouts/auth/pages/redeem-password-component/redeem-password-component';
 import {ResetPasswordComponent} from './layouts/auth/pages/reset-password-component/reset-password-component';
 import {UserComponent} from './layouts/dashboard/pages/user-component/user-component';
+import {EditUserComponent} from './layouts/dashboard/pages/edit-user-component/edit-user-component';
+import {CreateUserComponent} from './layouts/dashboard/pages/create-user-component/create-user-component';
 
 export const routes: Routes = [
   {
@@ -49,7 +51,9 @@ export const routes: Routes = [
       {path: 'notas-fiscais', component: ReceiptComponent},
       {path: 'nota-fiscal', component: EditReceiptComponent},
       {path: 'nota-fiscal/:id', component: EditReceiptComponent},
-      {path: 'usuarios', component: UserComponent, canActivate: [authGuard]}
+      {path: 'usuarios', component: UserComponent, canActivate: [authGuard]},
+      {path: 'usuario', component: CreateUserComponent, canActivate: [authGuard]},
+      {path: 'usuario/:id', component: EditUserComponent, canActivate: [authGuard]}
     ]
   }
 ];

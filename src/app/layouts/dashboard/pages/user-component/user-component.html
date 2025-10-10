@@ -23,7 +23,7 @@
             <input #global_filter pInputText type="text" (input)="user_table.filterGlobal(global_filter.value, 'contains')" placeholder="Buscar por palavra-chave" [style]="{ minWidth: '15rem'}" />
           </p-iconfield>
 
-          <a routerLink="/dashboard/usuarios" class="create-button"> + Criar </a>
+          <a routerLink="/dashboard/usuario" class="create-button"> + Criar </a>
         </div>
 
       </ng-template>
@@ -44,7 +44,7 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
-            <a [routerLink]="['/dashboard/usuarios/', user.userId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
+            <a [routerLink]="['/dashboard/usuario/', user.userId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></a>
             <button class="delete-button" (click)="confirmDelete(user)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>

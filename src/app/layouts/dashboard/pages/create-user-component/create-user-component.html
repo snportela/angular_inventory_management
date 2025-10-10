@@ -1,0 +1,77 @@
+<div class="edit">
+  <div class="dashboard-header">
+    <h2>Criar Usuário</h2>
+  </div>
+
+  <form [formGroup]="createUserForm" class="dashboard-form">
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Nome</label>
+        <input formControlName="name"/>
+        @if(createUserForm.controls['name'].touched) {
+          <div class="form-error">
+            @if (createUserForm.controls['name'].errors?.['required']) {
+              <span>Campo de nome é obrigatório</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="input-box">
+        <label>E-mail</label>
+        <input formControlName="email" />
+        @if(createUserForm.controls['email'].touched) {
+          <div class="form-error">
+            @if (createUserForm.controls['email'].errors?.['required']) {
+              <span>Campo de e-mail é obrigatório</span>
+            }
+            @if (createUserForm.controls['email'].errors?.['email']) {
+              <span>Digite um e-mail válido</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Senha</label>
+        <input autocomplete="off" type="password" formControlName="password"/>
+        @if(createUserForm.controls['password'].touched) {
+          <div class="form-error">
+            @if (createUserForm.controls['password'].errors?.['pattern']) {
+              <span>Senha deve conter: Ao menos 8 caracteres, 1 letra maiúscula, 1 número, 1 caractere especial</span>
+            }
+            @if (createUserForm.controls['password'].errors?.['required']) {
+              <span>Digite sua senha</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="input-box">
+        <label>Confirmar senha</label>
+        <input autocomplete="off" type="password" formControlName="confirmPassword" />
+        @if(createUserForm.controls['confirmPassword'].touched) {
+          <div class="form-error">
+            @if (createUserForm.controls['confirmPassword'].errors?.['required']) {
+              <span>Confirme sua senha</span>
+            }
+            @if (createUserForm.hasError('notSame')) {
+              <span>As senhas devem ser iguais</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" (click)="onSubmit()">Criar</button>
+      <button routerLink="/dashboard/usuarios" >Cancelar</button>
+    </div>
+  </form>
+</div>
+
+
+
