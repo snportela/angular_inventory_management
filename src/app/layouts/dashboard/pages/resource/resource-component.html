@@ -92,7 +92,7 @@
       </ng-template>
 
       <ng-template #body let-resource>
-        <tr [routerLink]="['/dashboard/item/', resource.resourceId]" class="inventory-item">
+        <tr [routerLink]="['/dashboard/item/', resource.resourceId]" class="linked-item">
           <td>{{ resource.name }}</td>
           <td>{{ resource.area.name }}</td>
           <td>{{ resource.category.name }}</td>
