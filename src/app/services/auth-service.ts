@@ -58,6 +58,28 @@ export class AuthService {
     return null;
   }
 
+  getUserId() {
+    const token = this.getToken();
+    if(token) {
+      try {
+        const decodedToken: { sub: string } = jwtDecode(token);
+
+        const subClaim = decodedToken.sub;
+        const parts = subClaim.split(';');
+        const idPart = parts.find(part => part.trim().startsWith('id:'));
+
+        if (idPart) {
+          return idPart.split(':')[1].trim();
+          }
+        return null;
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+        return null;
+      }
+    }
+    return null;
+  }
+
   logout(): void {
     sessionStorage.removeItem('token');
     this.isAuthenticated.set(false);
