@@ -1,4 +1,4 @@
-import {Loan} from './loan-response';
+import {Loan} from './loan';
 
 export interface LoanList {
   totalItems: number,
