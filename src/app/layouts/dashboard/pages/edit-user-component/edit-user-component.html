@@ -1,0 +1,44 @@
+<div class="edit">
+  <div class="dashboard-header">
+    <h2>Editar Usuário</h2>
+  </div>
+
+  <form [formGroup]="editUserForm" class="dashboard-form">
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Nome</label>
+        <input formControlName="name"/>
+        @if(editUserForm.controls['name'].touched) {
+          <div class="form-error">
+            @if (editUserForm.controls['name'].errors?.['required']) {
+              <span>Campo de nome é obrigatório</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="input-box">
+        <label>E-mail</label>
+        <input formControlName="email" />
+        @if(editUserForm.controls['email'].touched) {
+          <div class="form-error">
+            @if (editUserForm.controls['email'].errors?.['required']) {
+              <span>Campo de e-mail é obrigatório</span>
+            }
+            @if (editUserForm.controls['email'].errors?.['email']) {
+              <span>Digite um e-mail válido</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" (click)="onSubmit()">Editar</button>
+      <button routerLink="/dashboard/usuarios" >Cancelar</button>
+    </div>
+  </form>
+</div>
+
+
