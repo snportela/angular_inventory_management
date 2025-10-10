@@ -9,10 +9,9 @@
     [value]="loanList().loans"
     stripedRows
     [paginator]="true"
-    [rows]="2"
+    [rows]="size()"
     [globalFilterFields]="['studentName, loanStatus']"
     [tableStyle]="{ 'min-width': '50rem' }">
-    >
 
       <ng-template #caption>
         <div class="table-caption">
@@ -20,7 +19,7 @@
             <p-inputicon>
               <i class="pi pi-search"></i>
             </p-inputicon>
-            <input #filter_input pInputText type="text" (input)="loan_table.filterGlobal(filter_input.value, 'contains')" placeholder="Search keyword" />
+            <input #filter_input pInputText type="text" (input)="loan_table.filterGlobal(filter_input.value, 'contains')" placeholder="Buscar por palavra-chave" [style]="{ minWidth: '15rem'}"/>
           </p-iconfield>
           <a routerLink="/dashboard/emprestimo" class="create-button"> + Criar </a>
         </div>
@@ -32,7 +31,10 @@
             Estudante <p-sortIcon field="studentName"/>
           </th>
           <th pSortableColumn="loanDate">
-            Data <p-sortIcon field="loanDate"/>
+            Data-Empréstimo<p-sortIcon field="loanDate"/>
+          </th>
+          <th pSortableColumn="dueDate">
+            Data-Vencimento <p-sortIcon field="dueDate"/>
           </th>
           <th pSortableColumn="loanStatus">
             Status <p-sortIcon field="loanStatus"/>
@@ -45,10 +47,13 @@
         <tr>
           <td>{{ loan.studentName }}</td>
           <td>{{ loan.loanDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ loan.loanStatus }}</td>
+          <td>{{ loan.dueDate | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <p-tag [value]="loan.loanStatus | loanStatus" [severity]="loan.loanStatus | loanStatus: true" />
+          </td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <button [routerLink]="['/dashboard/emprestimo/', loan.loanId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
-            <button class="delete-button"><i class="pi pi-trash" style="color: red"></i></button>
+            <button class="delete-button" (click)="confirmDelete(loan)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
       </ng-template>

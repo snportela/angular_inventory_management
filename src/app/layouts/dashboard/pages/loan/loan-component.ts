@@ -1,4 +1,4 @@
-import {Component, computed, inject, Signal} from '@angular/core';
+import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {LoanService} from '../../../../services/loan-service';
 import {LoanList} from '../../../../models/loan/loan-list';
@@ -7,6 +7,10 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {DatePipe, NgStyle} from '@angular/common';
 import {RouterLink} from '@angular/router';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {Tag} from 'primeng/tag';
+import {resourceStatus} from '../../../../data/resource-status';
+import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
 
 @Component({
   selector: 'app-loan',
@@ -17,14 +21,71 @@ import {RouterLink} from '@angular/router';
     InputText,
     NgStyle,
     DatePipe,
-    RouterLink
+    RouterLink,
+    Tag,
+    LoanStatusPipe
   ],
   templateUrl: './loan-component.html',
   styleUrl: './loan-component.sass'
 })
 export class LoanComponent {
 
-  loanService: LoanService = inject(LoanService);
-  loanList: Signal<LoanList> = computed(() => this.loanService.loanList());
+  first: number = 0;
+  page = signal(0);
+  size = signal(10);
 
+  loanService: LoanService = inject(LoanService);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
+
+  loanList: WritableSignal<LoanList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, loans: [] });
+
+  constructor() {
+    effect(() => {
+      this.loanService.getLoanList(this.page(), this.size()).subscribe(data => this.loanList.set(data));
+    });
+  }
+
+  confirmDelete(loan: {loanId: string}) {
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja excluir este empréstimo?`,
+      header: 'Confirmar Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim, excluir',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-secondary p-button-outlined',
+
+      accept: () => {
+        this.loanService.deleteLoan(loan.loanId).subscribe({
+          next: () => {
+            this.loanList.update(currentState => {
+              const updatedLoans = currentState.loans.filter(
+                l => l.loanId !== loan.loanId
+              );
+              return {...currentState, loans: updatedLoans}
+            });
+
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: `Empréstimo" excluído.`,
+              life: 3000
+            });
+          },
+          error: (err) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível excluir o empréstimo.',
+              life: 3000
+            });
+            console.error('Delete failed', err);
+          }
+        })
+      }
+    })
+  }
+
+  protected readonly status = resourceStatus;
 }
