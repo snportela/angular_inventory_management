@@ -19,6 +19,7 @@ import {useTime} from '../../../../data/use-time';
 import {UseTimePipe} from '../../../../pipes/use-time-pipe';
 import {AreaList} from '../../../../models/area/area-list';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {Tag} from 'primeng/tag';
 
 @Component({
   selector: 'app-resource',
@@ -32,7 +33,8 @@ import {ConfirmationService, MessageService} from 'primeng/api';
     MultiSelect,
     RouterLink,
     StatusPipe,
-    UseTimePipe
+    UseTimePipe,
+    Tag
   ],
   templateUrl: './resource-component.html',
   styleUrl: './resource-component.sass'

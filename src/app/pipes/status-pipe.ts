@@ -6,11 +6,13 @@ import {resourceStatus} from '../data/resource-status';
 })
 export class StatusPipe implements PipeTransform {
 
-  transform(value: string, ...args: unknown[]): unknown {
+  transform(value: string, severity?: boolean): string {
 
     const status = resourceStatus.find(status => status.name == value);
 
-    return status?.translation;
+    if(severity) return status!.severity;
+
+    return status!.translation;
 
   }
 

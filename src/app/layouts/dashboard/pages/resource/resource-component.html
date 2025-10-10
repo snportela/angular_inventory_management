@@ -96,7 +96,9 @@
           <td>{{ resource.name }}</td>
           <td>{{ resource.area.name }}</td>
           <td>{{ resource.category.name }}</td>
-          <td>{{ resource.status | status }}</td>
+          <td>
+            <p-tag [value]="resource.status | status" [severity]="resource.status | status: true" />
+          </td>
           <td>{{ resource.useTime | useTime }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
             <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
