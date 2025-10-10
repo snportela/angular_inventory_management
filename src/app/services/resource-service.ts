@@ -13,8 +13,12 @@ export class ResourceService {
   private api_url: string = environment.API_URL;
   http: HttpClient = inject(HttpClient);
 
-  getResourceList(page: number, size: number): Observable<ResourceList>
+  getResourceList(page: number, size: number, status?: string): Observable<ResourceList>
   {
+    if(status) {
+      return this.http.get<ResourceList>(`${this.api_url}/resources?page=${page}&size=${size}&status=${status}`)
+    }
+
     return this.http.get<ResourceList>(`${this.api_url}/resources?page=${page}&size=${size}`)
   }
 

@@ -49,7 +49,7 @@ export class HomeComponent {
     const userId = this.authService.getUserId();
 
     effect(() => {
-      this.resourceService.getResourceList(this.page(), this.size()).subscribe(data => this.resourceList.set(data));
+      this.resourceService.getResourceList(this.page(), this.size(), 'UNDER_MAINTENANCE').subscribe(data => this.resourceList.set(data));
 
       this.userService.getUser(userId!).subscribe(data => this.userName.set(data.name.split(" ")[0]));
     });
