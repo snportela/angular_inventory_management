@@ -11,13 +11,15 @@ import {
 import {UserService} from '../../../../services/user-service';
 import {UserRegister} from '../../../../models/user/user-register';
 import {Router, RouterLink} from '@angular/router';
+import {Password} from 'primeng/password';
 
 @Component({
   selector: 'app-create-user-component',
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    Password
   ],
   templateUrl: './create-user-component.html',
   styleUrl: './create-user-component.sass'

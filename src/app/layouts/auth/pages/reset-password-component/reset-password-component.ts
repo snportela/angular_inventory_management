@@ -15,12 +15,14 @@ import {ResetPassword} from '../../../../models/auth/reset-password';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Password} from 'primeng/password';
 
 @Component({
   selector: 'app-reset-password-component',
   imports: [
     ProgressSpinner,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Password
   ],
   templateUrl: './reset-password-component.html',
   styleUrl: './reset-password-component.sass'
@@ -40,8 +42,10 @@ export class ResetPasswordComponent {
     return pass === confirmPass ? null : { notSame: true }
   }
 
+  strongRegex = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'
+
   resetPasswordForm: FormGroup = new FormGroup({
-    password: new FormControl("", [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
+    password: new FormControl("", [Validators.required, Validators.pattern(this.strongRegex)]),
     confirmPassword: new FormControl("", [Validators.required])
   }, { validators: this.checkPasswords });
 
