@@ -1,44 +1,101 @@
 <div class="edit">
   <div class="dashboard-header">
-    <h2>{{id ? "Editar Empréstimo" : "Criar Empréstimo"}}</h2>
+    <h2>{{isEdit() ? "Editar Empréstimo" : "Criar Empréstimo"}}</h2>
   </div>
 
-  <form class="dashboard-form">
-
-
+  <form [formGroup]="loanForm" class="dashboard-form">
 
     <div class="input-box-container">
       <div class="input-box">
         <label>Nome do estudante</label>
-        <input/>
+        <input formControlName="studentName"/>
+        @if (loanForm.controls['studentName'].touched) {
+          <div class="form-error">
+            @if (loanForm.controls['studentName'].errors?.['required']) {
+              <span>Nome do estudante é obrigatório</span>
+            }
+          </div>
+        }
       </div>
 
       <div class="input-box">
         <label>RA do estudante</label>
-        <input/>
+        <input formControlName="studentId"/>
+        @if (loanForm.controls['studentId'].touched) {
+          <div class="form-error">
+            @if (loanForm.controls['studentId'].errors?.['required']) {
+              <span>RA do estudante é obrigatório</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="input-box-container">
+      <div class="input-box">
+        <label>Data - Empréstimo</label>
+        <p-date-picker formControlName="loanDate" [showIcon]="true" [showTime]="true"></p-date-picker>
+        @if (loanForm.controls['loanDate'].touched) {
+          <div class="form-error">
+            @if (loanForm.controls['loanDate'].errors?.['required']) {
+              <span>Data do empréstimo é obrigatória</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="input-box">
+        <label>Data - Vencimento</label>
+        <p-date-picker formControlName="dueDate" [showIcon]="true" [showTime]="true"></p-date-picker>
+        @if (loanForm.controls['dueDate'].touched) {
+          <div class="form-error">
+            @if (loanForm.controls['dueDate'].errors?.['required']) {
+              <span>Data de vencimento do empréstimo é obrigatória</span>
+            }
+          </div>
+        }
       </div>
 
     </div>
 
     <div class="input-box-container">
-      <div class="input-box">
-        <label>Data</label>
-        <p-date-picker [showTime]="true"></p-date-picker>
-      </div>
 
       <div class="input-box">
         <label>Status</label>
-        <p-select [options]="categories" optionLabel="name" placeholder="Selecionar Status"></p-select>
+        <p-select formControlName="loanStatus" [options]="loanStatus" optionLabel="translation" optionValue="name" placeholder="Selecionar Status"></p-select>
+        @if (loanForm.controls['loanStatus'].touched) {
+          <div class="form-error">
+            @if (loanForm.controls['loanStatus'].errors?.['required']) {
+              <span>Status do empréstimo é obrigatório</span>
+            }
+          </div>
+        }
       </div>
+
+
+      <div class="input-box">
+        <label>Recurso(s)</label>
+        <p-multi-select formControlName="loanItems" [options]="resourceList().resources" optionLabel="name" optionValue="resourceId"  [filter]="true" filterBy="name" placeholder="Selecionar Recurso(s)"></p-multi-select>
+        @if (loanForm.controls['loanItems'].touched) {
+          <div class="form-error">
+            @if (loanForm.controls['loanItems'].errors?.['required']) {
+              <span>Selecione pelo menos um item</span>
+            }
+          </div>
+        }
+      </div>
+
+
     </div>
+
 
     <div class="input-box">
       <label>Observação</label>
-      <textarea rows="3"></textarea>
+      <textarea formControlName="observation" rows="3"></textarea>
     </div>
 
     <div class="form-buttons">
-      <button type="submit" >{{id ? "Editar" : "Criar"}}</button>
+      <button type="submit" (click)="onSubmit()" >{{isEdit() ? "Editar" : "Criar"}}</button>
       <button routerLink="/dashboard/emprestimos" >Cancelar</button>
     </div>
   </form>
