@@ -20,13 +20,15 @@ import {ResourceService} from '../../../../services/resource-service';
 import {map, of, switchMap} from 'rxjs';
 import {ReceiptList} from '../../../../models/receipt/receipt-list';
 import {ReceiptService} from '../../../../services/receipt-service';
+import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
 
 @Component({
   selector: 'app-edit-resource-component',
   imports: [
     RouterLink,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CurrencyMaskDirective
   ],
   templateUrl: './edit-resource-component.html',
   styleUrl: './edit-resource-component.sass'
