@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-buttons">
-      <button type="submit" (click)="onSubmit()" >{{isEdit() ? "Editar" : "Criar"}}</button>
+      <p-button type="submit" (click)="onSubmit()" [loading]="isLoading()">{{isEdit() ? "Editar" : "Criar"}}</p-button>
       <button type="button" routerLink="/dashboard/areas" >Cancelar</button>
     </div>
   </form>

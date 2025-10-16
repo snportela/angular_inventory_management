@@ -1,16 +1,19 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AreaService} from '../../../../services/area-service';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {Area} from '../../../../models/area/area';
 import {map, of, switchMap} from 'rxjs';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-edit-area-component',
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Button
   ],
   templateUrl: './edit-area-component.html',
   styleUrl: './edit-area-component.sass'
@@ -18,6 +21,8 @@ import {map, of, switchMap} from 'rxjs';
 export class EditAreaComponent {
 
   areaService: AreaService = inject(AreaService);
+  private messageService = inject(MessageService);
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -32,8 +37,7 @@ export class EditAreaComponent {
   );
 
   isEdit = computed(() => this.areaId() !== null);
-
-  error = signal<string | null>(null);
+  isLoading: WritableSignal<boolean> = signal(false);
 
   areaForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required, Validators.maxLength(100)])
@@ -65,20 +69,44 @@ export class EditAreaComponent {
     if (this.areaForm.invalid) return;
 
     const data = this.areaForm.value as Omit<Area, 'id'>;
+    this.isLoading.set(true);
 
     if (this.isEdit()) {
       this.areaService.updateArea(this.areaId()!, data).subscribe({
-        next: area => console.log('Area updated:', area),
-        error: err => this.error.set('Failed to update area')
+        next: area => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Área atualizada com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível editar a Área.',
+          life: 1500
+        })
       });
     } else {
       this.areaService.createArea(data).subscribe({
-        next: area => console.log('Area created:', area),
-        error: err => this.error.set('Failed to create area')
+        next: area => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Área criada com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível criar a Área.',
+          life: 1500
+        })
       });
     }
 
-    this.router.navigateByUrl('/dashboard/areas');
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/areas');
+    }, 1500)
 
   }
 

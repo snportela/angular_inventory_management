@@ -35,8 +35,8 @@
     </div>
 
     <div class="form-buttons">
-      <button type="submit" (click)="onSubmit()">Editar</button>
-      <button routerLink="/dashboard/usuarios" >Cancelar</button>
+      <p-button type="submit" (click)="onSubmit()" [loading]="isLoading()">Editar</p-button>
+      <button type="button" routerLink="/dashboard/usuarios" >Cancelar</button>
     </div>
   </form>
 </div>

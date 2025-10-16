@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal, WritableSignal} from '@angular/core';
 
 import {
   FormControl,
@@ -12,13 +12,16 @@ import {UserService} from '../../../../services/user-service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map, of, switchMap} from 'rxjs';
 import {User} from '../../../../models/user/user';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-edit-user-component',
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    Button
   ],
   templateUrl: './edit-user-component.html',
   styleUrl: './edit-user-component.sass'
@@ -26,13 +29,14 @@ import {User} from '../../../../models/user/user';
 export class EditUserComponent {
 
   private userService: UserService = inject(UserService);
+  private messageService = inject(MessageService);
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   private userId = toSignal(this.route.paramMap.pipe(map(params => params.get('id'))));
 
-  error = signal<string | null>(null);
+  isLoading: WritableSignal<boolean> = signal(false);
 
   editUserForm: FormGroup = new FormGroup({
     name: new FormControl("", Validators.required),
@@ -65,14 +69,28 @@ export class EditUserComponent {
 
   onSubmit() {
     if(this.editUserForm.invalid) return;
+    this.isLoading.set(true);
 
     const data = this.editUserForm.value as Omit<User, 'userId'>;
 
     this.userService.updateUser(this.userId()!, data).subscribe({
-      next: user => console.log("user updated", user),
-      error: err => this.error.set("failed to update user")
+      next: user => this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: `Usuário atualizado com sucesso.`,
+        life: 1500
+      }),
+      error: err => this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Não foi possível atualizar o Usuário.',
+        life: 1500
+      })
     });
 
-    this.router.navigateByUrl('/dashboard/usuarios');
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/usuarios');
+    }, 1500);
   }
 }

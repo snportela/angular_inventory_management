@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal, Signal} from '@angular/core';
+import {Component, computed, effect, inject, signal, Signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {
   FormControl,
@@ -21,6 +21,8 @@ import {map, of, switchMap} from 'rxjs';
 import {ReceiptList} from '../../../../models/receipt/receipt-list';
 import {ReceiptService} from '../../../../services/receipt-service';
 import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-edit-resource-component',
@@ -28,7 +30,8 @@ import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
     RouterLink,
     FormsModule,
     ReactiveFormsModule,
-    CurrencyMaskDirective
+    CurrencyMaskDirective,
+    Button
   ],
   templateUrl: './edit-resource-component.html',
   styleUrl: './edit-resource-component.sass'
@@ -41,6 +44,7 @@ export class EditResourceComponent {
   private areaService: AreaService = inject(AreaService);
   private categoryService: CategoryService = inject(CategoryService);
   private receiptService: ReceiptService = inject(ReceiptService);
+  private messageService = inject(MessageService);
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -59,8 +63,7 @@ export class EditResourceComponent {
   receiptList: Signal<ReceiptList> = toSignal(this.receiptService.getReceiptList(this.page, this.size), {initialValue: {} as ReceiptList});
 
   isEdit = computed(() => this.resourceId());
-
-  error = signal<string | null>(null);
+  isLoading: WritableSignal<boolean> = signal(false);
 
   resourceForm: FormGroup = new FormGroup({
     name: new FormControl("", Validators.required),
@@ -117,6 +120,7 @@ export class EditResourceComponent {
 
   onSubmit() {
     if (this.resourceForm.invalid) return;
+    this.isLoading.set(true);
 
     const formValue = this.resourceForm.getRawValue();
 
@@ -131,22 +135,42 @@ export class EditResourceComponent {
       receipt: selectedReceipt || null
     };
 
-    console.log(payload)
-
     if (this.isEdit()) {
       this.resourceService.updateResource(this.resourceId()!, payload).subscribe({
-        next: resource => console.log('Resource updated:', resource),
-        error: err => this.error.set('Failed to update resource')
+        next: resource => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Item atualizado com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível editar o Item.',
+          life: 1500
+        })
       });
     } else {
       this.resourceService.createResource(payload).subscribe({
-        next: resource => console.log('Resource created:', resource),
-        error: err => this.error.set('Failed to create ' +
-          'resource')
+        next: resource => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Item criado com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível criar o Item.',
+          life: 1500
+        })
       });
     }
 
-    this.router.navigateByUrl('/dashboard/inventario');
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/inventario');
+    }, 1500);
   }
 
 }

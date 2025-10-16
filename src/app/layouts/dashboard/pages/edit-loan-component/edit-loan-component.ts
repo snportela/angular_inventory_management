@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {DatePicker} from 'primeng/datepicker';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -11,6 +11,8 @@ import {LoanService} from '../../../../services/loan-service';
 import {Loan} from '../../../../models/loan/loan';
 import {MultiSelect} from 'primeng/multiselect';
 import {LoanItemResponse} from '../../../../models/loan/loan-item-response';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-edit-loan-component',
@@ -20,7 +22,8 @@ import {LoanItemResponse} from '../../../../models/loan/loan-item-response';
     FormsModule,
     Select,
     ReactiveFormsModule,
-    MultiSelect
+    MultiSelect,
+    Button
   ],
   templateUrl: './edit-loan-component.html',
   styleUrl: './edit-loan-component.sass'
@@ -31,6 +34,7 @@ export class EditLoanComponent {
 
   private loanService: LoanService = inject(LoanService);
   private resourceService: ResourceService = inject(ResourceService);
+  private messageService = inject(MessageService);
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -40,7 +44,7 @@ export class EditLoanComponent {
   private loanId = toSignal(this.route.paramMap.pipe(map(params => params.get('id'))));
 
   isEdit = computed(() => this.loanId());
-  error = signal<string | null>(null);
+  isLoading: WritableSignal<boolean> = signal(false);
 
   loanForm: FormGroup = new FormGroup({
     studentName: new FormControl("", Validators.required),
@@ -102,6 +106,7 @@ export class EditLoanComponent {
   onSubmit() {
 
     if(this.loanForm.invalid) return;
+    this.isLoading.set(true);
 
     const formValue = this.loanForm.getRawValue();
 
@@ -127,12 +132,17 @@ export class EditLoanComponent {
               resourceId: r
             }
             this.loanService.addLoanItems(loanItem).subscribe({
-              next: loanItem => console.log("success"),
-              error: err => this.error.set('error')
+              next: loanItem => this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: `Empréstimo atualizado com sucesso.`,
+                life: 1500
+              }),
+              error: err =>  console.log(err)
             })
           })
         },
-        error: err => this.error.set('Failed to update loan')
+        error: err => console.log(err)
       })
 
     } else {
@@ -145,15 +155,24 @@ export class EditLoanComponent {
               resourceId: r
             }
               this.loanService.addLoanItems(loanItem).subscribe({
-                next: loanItem => console.log("success"),
-                error: err => this.error.set('error')
+                next: loanItem => this.messageService.add({
+                  severity: 'success',
+                  summary: 'Sucesso',
+                  detail: `Empréstimo criado com sucesso.`,
+                  life: 1500
+                }),
+                error: err => console.log(err)
               })
           })
         },
-        error: err => this.error.set('Failed to create loan')
+        error: err => console.log(err)
       })
     }
-    this.router.navigateByUrl('/dashboard/emprestimos');
+
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/emprestimos');
+    }, 1500)
 
   }
 }

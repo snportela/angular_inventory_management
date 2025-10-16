@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal} from '@angular/core';
+import {Component, computed, effect, inject, signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {DatePicker} from 'primeng/datepicker';
 import {ReceiptService} from '../../../../services/receipt-service';
@@ -7,6 +7,8 @@ import {map, of, switchMap} from 'rxjs';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Receipt} from '../../../../models/receipt/receipt';
 import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-edit-receipt-component',
@@ -14,7 +16,8 @@ import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
     RouterLink,
     DatePicker,
     ReactiveFormsModule,
-    CurrencyMaskDirective
+    CurrencyMaskDirective,
+    Button
   ],
   templateUrl: './edit-receipt-component.html',
   styleUrl: './edit-receipt-component.sass'
@@ -24,6 +27,7 @@ export class EditReceiptComponent {
   size: number = 100;
 
   private receiptService: ReceiptService = inject(ReceiptService);
+  private messageService = inject(MessageService);
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -31,8 +35,7 @@ export class EditReceiptComponent {
   private receiptId = toSignal(this.route.paramMap.pipe(map(params => params.get('id'))));
 
   isEdit = computed(() => this.receiptId());
-
-  error = signal<string | null>(null);
+  isLoading: WritableSignal<boolean> = signal(false);
 
   receiptForm: FormGroup = new FormGroup({
     receiptNumber: new FormControl("", Validators.required),
@@ -70,6 +73,7 @@ export class EditReceiptComponent {
   onSubmit() {
 
     if(this.receiptForm.invalid) return;
+    this.isLoading.set(true);
 
     const formValue = this.receiptForm.getRawValue();
 
@@ -82,16 +86,39 @@ export class EditReceiptComponent {
 
     if(this.isEdit()) {
       this.receiptService.updateReceipt(this.receiptId()!, payload).subscribe({
-        next: receipt => console.log('Receipt updated', receipt),
-        error: err => this.error.set('Failed to update receipt')
+        next: receipt => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Nota Fiscal atualizada com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível editar a Nota Fiscal.',
+          life: 1500
+        })
       });
     } else {
       this.receiptService.createReceipt(payload).subscribe({
-        next: receipt => console.log('Receipt created: ', receipt),
-        error: err => this.error.set('Failed to create receipt' )
+        next: receipt => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Nota Fiscal criada com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível criar a Nota Fiscal.',
+          life: 1500
+        })
       });
     }
 
-    this.router.navigateByUrl('/dashboard/notas-fiscais');
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/notas-fiscais');
+    }, 1500)
   }
 }

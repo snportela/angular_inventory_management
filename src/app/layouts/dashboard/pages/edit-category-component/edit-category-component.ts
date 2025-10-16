@@ -1,16 +1,19 @@
-import {Component, computed, effect, inject, Input, signal} from '@angular/core';
+import {Component, computed, effect, inject, Input, signal, WritableSignal} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {CategoryService} from '../../../../services/category-service';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {map, of, switchMap} from 'rxjs';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Category} from '../../../../models/category/category';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-edit-category-component',
   imports: [
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Button
   ],
   templateUrl: './edit-category-component.html',
   styleUrl: './edit-category-component.sass'
@@ -18,6 +21,8 @@ import {Category} from '../../../../models/category/category';
 export class EditCategoryComponent {
 
   categoryService: CategoryService = inject(CategoryService);
+  private messageService = inject(MessageService);
+
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -32,8 +37,8 @@ export class EditCategoryComponent {
   );
 
   isEdit = computed(() => this.categoryId());
+  isLoading: WritableSignal<boolean> = signal(false);
 
-  error = signal<string | null>(null);
 
   categoryForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required])
@@ -65,21 +70,45 @@ export class EditCategoryComponent {
     if(this.categoryForm.invalid) return;
 
     const data = this.categoryForm.value as Omit<Category, 'id'>;
+    this.isLoading.set(true);
 
     if (this.isEdit()) {
       this.categoryService.updateCategory(this.categoryId()!, data).subscribe({
-        next: category => console.log('Area updated:', category),
-        error: err => this.error.set('Failed to update category')
+        next: category => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Categoria atualizada com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível editar a Categoria.',
+          life: 1500
+        })
       });
     } else {
       this.categoryService.createCategory(data).subscribe({
-        next: category => console.log('Area created:', category),
-        error: err => this.error.set('Failed to create ' +
-          'category')
+        next: category => this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: `Categoria criada com sucesso.`,
+          life: 1500
+        }),
+        error: err => this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível criar a Categoria.',
+          life: 1500
+        })
       });
     }
 
-    this.router.navigateByUrl('/dashboard/categorias');
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/categorias');
+    }, 1500)
+
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -12,6 +12,8 @@ import {UserService} from '../../../../services/user-service';
 import {UserRegister} from '../../../../models/user/user-register';
 import {Router, RouterLink} from '@angular/router';
 import {Password} from 'primeng/password';
+import {MessageService} from 'primeng/api';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-create-user-component',
@@ -19,7 +21,8 @@ import {Password} from 'primeng/password';
     FormsModule,
     ReactiveFormsModule,
     RouterLink,
-    Password
+    Password,
+    Button
   ],
   templateUrl: './create-user-component.html',
   styleUrl: './create-user-component.sass'
@@ -27,6 +30,8 @@ import {Password} from 'primeng/password';
 export class CreateUserComponent {
 
   private userService: UserService = inject(UserService);
+  private messageService = inject(MessageService);
+
   private router = inject(Router);
 
   checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
@@ -42,10 +47,11 @@ export class CreateUserComponent {
     confirmPassword: new FormControl("", [Validators.required])
   }, { validators: this.checkPasswords });
 
-  error = signal<string | null>(null);
+  isLoading: WritableSignal<boolean> = signal(false);
 
   onSubmit() {
     if(this.createUserForm.invalid) return;
+    this.isLoading.set(true);
 
     const formValue = this.createUserForm.getRawValue();
     const payload: UserRegister = {
@@ -54,11 +60,24 @@ export class CreateUserComponent {
     }
 
     this.userService.createUser(payload).subscribe({
-      next: user => console.log("user created", user),
-      error: err => this.error.set("failed to create user")
+      next: user => this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: `Usuário criado com sucesso.`,
+        life: 1500
+      }),
+      error: err => this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Não foi possível criar o Usuário.',
+        life: 1500
+      })
     });
 
-    this.router.navigateByUrl('/dashboard/usuarios');
+    setTimeout(() => {
+      this.isLoading.set(false);
+      this.router.navigateByUrl('/dashboard/usuarios');
+    }, 1500);
   }
 
 }
