@@ -23,6 +23,7 @@ import {ReceiptService} from '../../../../services/receipt-service';
 import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
 import {MessageService} from 'primeng/api';
 import {Button} from 'primeng/button';
+import {Select} from 'primeng/select';
 
 @Component({
   selector: 'app-edit-resource-component',
@@ -31,7 +32,8 @@ import {Button} from 'primeng/button';
     FormsModule,
     ReactiveFormsModule,
     CurrencyMaskDirective,
-    Button
+    Button,
+    Select
   ],
   templateUrl: './edit-resource-component.html',
   styleUrl: './edit-resource-component.sass'
@@ -97,23 +99,27 @@ export class EditResourceComponent {
   constructor() {
     effect(() => {
       const r = this.resource();
-      if (r) {
-        this.resourceForm.patchValue({
-          name: r.name,
-          category: r.category?.categoryId,
-          area: r.area?.areaId,
-          receipt: r.receipt?.receiptId,
-          repairState: r.repairState,
-          status: r.status,
-          useTime: r.useTime,
-          description: r.description,
-          resourceNumber: r.resourceNumber,
-          serialNumber: r.serialNumber,
-          manufactureYear: r.manufactureYear,
-          price: r.price,
-          observation: r.observation
-        });
-      }
+
+      setTimeout(() => {
+        if (r) {
+          this.resourceForm.patchValue({
+            name: r.name,
+            category: r.category,
+            area: r.area,
+            receipt: r.receipt,
+            repairState: r.repairState,
+            status: r.status,
+            useTime: r.useTime,
+            description: r.description,
+            resourceNumber: r.resourceNumber,
+            serialNumber: r.serialNumber,
+            manufactureYear: r.manufactureYear,
+            price: r.price,
+            observation: r.observation
+          });
+        }
+      }, 100)
+
     });
   }
 
@@ -122,21 +128,10 @@ export class EditResourceComponent {
     if (this.resourceForm.invalid) return;
     this.isLoading.set(true);
 
-    const formValue = this.resourceForm.getRawValue();
-
-    const selectedCategory = this.categoryList().categories.find(c => c.categoryId === formValue.category);
-    const selectedArea = this.areaList().areas.find(a => a.areaId === formValue.area);
-    const selectedReceipt = this.receiptList().receipts.find(r => r.receiptId === formValue.receipt);
-
-    const payload: Omit<Resource, 'resourceId'> = {
-      ...formValue,
-      category: selectedCategory || null,
-      area: selectedArea || null,
-      receipt: selectedReceipt || null
-    };
+    const data = this.resourceForm.getRawValue() as Omit<Resource, 'resourceId'>;
 
     if (this.isEdit()) {
-      this.resourceService.updateResource(this.resourceId()!, payload).subscribe({
+      this.resourceService.updateResource(this.resourceId()!, data).subscribe({
         next: resource => this.messageService.add({
           severity: 'success',
           summary: 'Sucesso',
@@ -151,7 +146,7 @@ export class EditResourceComponent {
         })
       });
     } else {
-      this.resourceService.createResource(payload).subscribe({
+      this.resourceService.createResource(data).subscribe({
         next: resource => this.messageService.add({
           severity: 'success',
           summary: 'Sucesso',

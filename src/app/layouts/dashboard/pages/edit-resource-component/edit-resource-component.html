@@ -22,15 +22,7 @@
     <div class="input-box-container">
       <div class="input-box">
         <label>Categoria</label>
-        <select formControlName="category">
-          <option [value]="null" disabled>Selecionar Categoria</option>
-
-          @for (category of categoryList().categories; track category.categoryId) {
-            <option [value]="category.categoryId">
-              {{ category.name }}
-            </option>
-          }
-        </select>
+        <p-select formControlName="category" [options]="categoryList().categories" optionLabel="name" placeholder="Selecionar Categoria" [filter]="true" filterBy="name"></p-select>
         @if (resourceForm.controls['category'].touched) {
           <div class="form-error">
             @if (resourceForm.controls['category'].errors?.['required']) {
@@ -41,12 +33,7 @@
       </div>
       <div class="input-box">
         <label>Área de Conhecimento</label>
-        <select formControlName="area">
-          <option [value]="null" disabled>Selecionar Área</option>
-          @for (area of areaList().areas; track area.areaId) {
-            <option [value]="area.areaId">{{ area.name }}</option>
-          }
-        </select>
+        <p-select formControlName="area" [options]="areaList().areas" optionLabel="name" placeholder="Selecionar Área" [filter]="true" filterBy="name"></p-select>
         @if (resourceForm.controls['area'].touched) {
           <div class="form-error">
             @if (resourceForm.controls['area'].errors?.['required']) {
@@ -72,12 +59,7 @@
     <div class="input-box-container">
       <div class="input-box">
         <label>Estado de Conservação</label>
-        <select formControlName="repairState">
-          <option [value]="null" disabled>Selecionar Estado de Conservação</option>
-          @for (state of repairState; track state.name) {
-            <option [value]="state.name">{{ state.translation }}</option>
-          }
-        </select>
+        <p-select formControlName="repairState" [options]="repairState" optionLabel="translation" optionValue="name" placeholder="Selecionar Estado de Conservação"></p-select>
         @if (resourceForm.controls['repairState'].touched) {
           <div class="form-error">
             @if (resourceForm.controls['repairState'].errors?.['required']) {
@@ -88,12 +70,7 @@
       </div>
       <div class="input-box">
         <label>Status</label>
-        <select formControlName="status">
-          <option [value]="null" disabled>Selecionar Status</option>
-          @for (s of status; track s.name) {
-            <option [value]="s.name">{{ s.translation }}</option>
-          }
-        </select>
+        <p-select formControlName="status" [options]="status" optionLabel="translation" optionValue="name" placeholder="Selecionar Status"></p-select>
         @if (resourceForm.controls['status'].touched) {
           <div class="form-error">
             @if (resourceForm.controls['status'].errors?.['required']) {
@@ -125,12 +102,7 @@
 
       <div class="input-box">
         <label>Tempo de estimativa de uso</label>
-        <select formControlName="useTime">
-          <option [value]="null" disabled>Selecionar Estimativa</option>
-          @for (time of useTime; track time.name) {
-            <option [value]="time.name">{{ time.translation }}</option>
-          }
-        </select>
+        <p-select formControlName="useTime" [options]="useTime" optionLabel="translation" optionValue="name" placeholder="Selecionar Estimativa"></p-select>
         @if (resourceForm.controls['useTime'].touched) {
           <div class="form-error">
             @if (resourceForm.controls['useTime'].errors?.['required']) {
@@ -144,12 +116,7 @@
     <div class="input-box-container">
       <div class="input-box">
         <label>Nota Fiscal</label>
-        <select formControlName="receipt">
-          <option [value]="null" disabled>Selecionar Nota Fiscal</option>
-          @for (receipt of receiptList().receipts; track receipt.receiptId) {
-            <option [value]="receipt.receiptId">{{ receipt.receiptNumber }}</option>
-          }
-        </select>
+        <p-select formControlName="receipt" [options]="receiptList().receipts" optionLabel="receiptNumber" placeholder="Selecionar Nota Fiscal" [filter]="true" filterBy="receiptNumber"></p-select>
       </div>
         <div class="input-box">
           <label>Valor</label>
