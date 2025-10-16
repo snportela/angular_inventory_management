@@ -11,7 +11,7 @@
     [paginator]="true"
     [rows]="size()"
     [globalFilterFields]="['name', 'area.name', 'category.name', 'status', 'useTime']"
-    [tableStyle]="{ 'min-width': '50rem', 'min-height': '5rem'}"
+    [tableStyle]="{ 'min-width': '50rem'}"
     >
 
       <ng-template #caption>
@@ -100,7 +100,7 @@
             <p-tag [value]="resource.status | status" [severity]="resource.status | status: true" />
           </td>
           <td>{{ resource.useTime | useTime }}</td>
-          <td [ngStyle]="{'display': 'flex', 'gap': '5px'}">
+          <td [ngStyle]="{'display': 'flex', 'gap': '5px', 'padding-bottom': '15px', 'padding-top': '15px'}">
             <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
             <button class="delete-button" (click)="confirmDelete(resource)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
