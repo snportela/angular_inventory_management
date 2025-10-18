@@ -34,6 +34,10 @@
       </div>
     </div>
 
+    <div class="input-box">
+      <label>Chave de acesso</label>
+      <input formControlName="accessKey"/>
+    </div>
 
     <div class="form-buttons">
       <p-button type="submit" (click)="onSubmit()" [loading]="isLoading()">{{isEdit() ? "Editar" : "Criar"}}</p-button>

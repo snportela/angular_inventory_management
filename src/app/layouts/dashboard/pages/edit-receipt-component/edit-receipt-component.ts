@@ -39,6 +39,7 @@ export class EditReceiptComponent {
 
   receiptForm: FormGroup = new FormGroup({
     receiptNumber: new FormControl("", Validators.required),
+    accessKey: new FormControl(""),
     price: new FormControl(null, Validators.required),
     supplier: new FormControl("", Validators.required),
     receiptDate: new FormControl("", Validators.required)
@@ -62,6 +63,7 @@ export class EditReceiptComponent {
       if(r) {
         this.receiptForm.patchValue({
           receiptNumber: r.receiptNumber,
+          accessKey: r.accessKey,
           price: r.price,
           supplier: r.supplier,
           receiptDate: new Date(r.receiptDate)
