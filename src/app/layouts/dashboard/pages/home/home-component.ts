@@ -13,7 +13,7 @@ import {CategoryList} from '../../../../models/category/category-list';
 import {UserService} from '../../../../services/user-service';
 import {AuthService} from '../../../../services/auth-service';
 import {Tag} from 'primeng/tag';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgStyle} from '@angular/common';
 import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
 import {LoanService} from '../../../../services/loan-service';
 import {LoanList} from '../../../../models/loan/loan-list';
@@ -29,7 +29,8 @@ import {Divider} from 'primeng/divider';
     Tag,
     DatePipe,
     LoanStatusPipe,
-    Divider
+    Divider,
+    NgStyle
   ],
   templateUrl: './home-component.html',
   styleUrl: './home-component.sass'
