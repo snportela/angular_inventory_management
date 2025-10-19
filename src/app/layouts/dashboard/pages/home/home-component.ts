@@ -13,10 +13,7 @@ import {CategoryList} from '../../../../models/category/category-list';
 import {UserService} from '../../../../services/user-service';
 import {AuthService} from '../../../../services/auth-service';
 import {Tag} from 'primeng/tag';
-import {DatePipe, NgStyle} from '@angular/common';
-import {IconField} from 'primeng/iconfield';
-import {InputIcon} from 'primeng/inputicon';
-import {InputText} from 'primeng/inputtext';
+import {DatePipe} from '@angular/common';
 import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
 import {LoanService} from '../../../../services/loan-service';
 import {LoanList} from '../../../../models/loan/loan-list';
@@ -31,11 +28,7 @@ import {Divider} from 'primeng/divider';
     UseTimePipe,
     Tag,
     DatePipe,
-    IconField,
-    InputIcon,
-    InputText,
     LoanStatusPipe,
-    NgStyle,
     Divider
   ],
   templateUrl: './home-component.html',
