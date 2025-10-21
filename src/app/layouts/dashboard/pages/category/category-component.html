@@ -12,6 +12,7 @@
     [rows]="size()"
     [globalFilterFields]="['name']"
     [tableStyle]="{ 'min-width': '50rem' }"
+    [loading]="isLoading()"
     >
 
       <ng-template #caption>
@@ -32,6 +33,17 @@
             Nome <p-sortIcon field="name"/>
           </th>
           <th style="width: 25%">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #loadingbody>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
         </tr>
       </ng-template>
 

@@ -12,6 +12,7 @@
     [rows]="size()"
     [globalFilterFields]="['name', 'area.name', 'category.name', 'status', 'useTime']"
     [tableStyle]="{ 'min-width': '50rem'}"
+    [loading]="isLoading()"
     >
 
       <ng-template #caption>
@@ -89,6 +90,25 @@
 
         <th></th>
 
+      </ng-template>
+
+      <ng-template #loadingbody>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
       </ng-template>
 
       <ng-template #body let-resource>

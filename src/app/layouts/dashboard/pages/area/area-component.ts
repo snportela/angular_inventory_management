@@ -9,6 +9,8 @@ import {InputText} from 'primeng/inputtext';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {RouterLink} from '@angular/router';
+import {Skeleton} from 'primeng/skeleton';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-area',
@@ -19,7 +21,8 @@ import {RouterLink} from '@angular/router';
     InputIcon,
     InputText,
     ConfirmDialogModule,
-    RouterLink
+    RouterLink,
+    Skeleton
   ],
   templateUrl: './area-component.html',
   styleUrl: './area-component.sass'
@@ -33,14 +36,19 @@ export class AreaComponent {
   first: number = 0;
   page = signal(0);
   rows = signal(10);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   areaList: WritableSignal<AreaList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, areas: [] });
 
   constructor() {
     effect(() => {
-      this.areaService.getAreaList(this.page(), this.rows()).subscribe(data => {
-        this.areaList.set(data);
-      });
+      this.areaService.getAreaList(this.page(), this.rows())
+        .pipe(
+          finalize(() => this.isLoading.set(false))
+        )
+        .subscribe(data => {
+          this.areaList.set(data);
+        });
     });
   }
 

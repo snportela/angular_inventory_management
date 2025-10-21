@@ -8,6 +8,8 @@ import {InputText} from 'primeng/inputtext';
 import {NgStyle} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {Skeleton} from 'primeng/skeleton';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -17,7 +19,8 @@ import {ConfirmationService, MessageService} from 'primeng/api';
     InputIcon,
     InputText,
     NgStyle,
-    RouterLink
+    RouterLink,
+    Skeleton
   ],
   templateUrl: './category-component.html',
   styleUrl: './category-component.sass'
@@ -31,12 +34,16 @@ export class CategoryComponent {
   first: number = 0;
   page = signal(0);
   size = signal(10);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   categoryList: WritableSignal<CategoryList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, categories: []});
 
   constructor() {
     effect(() => {
-      this.categoryService.getCategoryList(this.page(), this.size()).subscribe(data => this.categoryList.set(data));
+
+      this.categoryService.getCategoryList(this.page(), this.size()).pipe(
+        finalize(() => this.isLoading.set(false))
+      ).subscribe(data => this.categoryList.set(data));
     });
   }
 

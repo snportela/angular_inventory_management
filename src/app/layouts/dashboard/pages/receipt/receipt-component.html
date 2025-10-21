@@ -11,7 +11,9 @@
       [paginator]="true"
       [rows]="size()"
       [globalFilterFields]="['receiptNumber', 'price', 'supplier']"
-      [tableStyle]="{ 'min-width': '50rem' }">
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [loading]="isLoading()"
+    >
 
       <ng-template #caption>
         <div class="table-caption">
@@ -44,6 +46,24 @@
           <th>Ações</th>
         </tr>
       </ng-template>
+
+      <ng-template #loadingbody>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+      </ng-template>
+
       <ng-template #body let-receipt>
         <tr>
           <td>{{ receipt.receiptNumber }}</td>

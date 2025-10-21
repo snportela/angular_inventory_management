@@ -20,6 +20,8 @@ import {UseTimePipe} from '../../../../pipes/use-time-pipe';
 import {AreaList} from '../../../../models/area/area-list';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Tag} from 'primeng/tag';
+import {Skeleton} from 'primeng/skeleton';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-resource',
@@ -34,7 +36,8 @@ import {Tag} from 'primeng/tag';
     RouterLink,
     StatusPipe,
     UseTimePipe,
-    Tag
+    Tag,
+    Skeleton
   ],
   templateUrl: './resource-component.html',
   styleUrl: './resource-component.sass'
@@ -50,6 +53,7 @@ export class ResourceComponent {
   first: number = 0;
   page = signal(0);
   size = signal(10);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   resourceList: WritableSignal<ResourceList> =  signal({currentPage: 0, totalItems: 0, totalPages: 0, resources: [] });
 
@@ -63,7 +67,9 @@ export class ResourceComponent {
 
   constructor() {
     effect(() => {
-      this.resourceService.getResourceList(this.page(), this.size()).subscribe(data => this.resourceList.set(data));
+      this.resourceService.getResourceList(this.page(), this.size()).pipe(
+        finalize(() => this.isLoading.set(false))
+      ).subscribe(data => this.resourceList.set(data));
     });
   }
 

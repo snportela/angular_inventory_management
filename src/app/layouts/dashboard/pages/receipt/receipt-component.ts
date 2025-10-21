@@ -8,6 +8,8 @@ import {RouterLink} from '@angular/router';
 import {TableModule} from 'primeng/table';
 import {CurrencyPipe, DatePipe, NgStyle} from '@angular/common';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import {Skeleton} from 'primeng/skeleton';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-receipt',
@@ -19,7 +21,8 @@ import {ConfirmationService, MessageService} from 'primeng/api';
     TableModule,
     NgStyle,
     DatePipe,
-    CurrencyPipe
+    CurrencyPipe,
+    Skeleton
   ],
   templateUrl: './receipt-component.html',
   styleUrl: './receipt-component.sass'
@@ -33,13 +36,16 @@ export class ReceiptComponent {
   first: number = 0;
   page = signal(0);
   size = signal(10);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   receiptList: WritableSignal<ReceiptList
   > =  signal({currentPage: 0, totalItems: 0, totalPages: 0, receipts: [] });
 
   constructor() {
     effect(() => {
-      this.receiptService.getReceiptList(this.page(), this.size()).subscribe(data => this.receiptList.set(data));
+      this.receiptService.getReceiptList(this.page(), this.size()).pipe(
+        finalize(() => this.isLoading.set(false))
+      ).subscribe(data => this.receiptList.set(data));
     });
   }
 

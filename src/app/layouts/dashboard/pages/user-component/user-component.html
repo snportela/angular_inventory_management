@@ -12,7 +12,9 @@
       [first]="first"
       [rows]="size()"
       [globalFilterFields]="['name', 'email']"
-      [tableStyle]="{ 'min-width': '50rem' }">
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [loading]="isLoading()"
+    >
 
       <ng-template #caption>
         <div class="table-caption">
@@ -39,6 +41,20 @@
           <th>Ações</th>
         </tr>
       </ng-template>
+
+      <ng-template #loadingbody>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+      </ng-template>
+
       <ng-template #body let-user>
         <tr>
           <td>{{ user.name }}</td>

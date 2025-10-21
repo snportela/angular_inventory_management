@@ -8,6 +8,8 @@ import {UserService} from '../../../../services/user-service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {UserList} from '../../../../models/user/user-list';
 import {NgStyle} from '@angular/common';
+import {finalize} from 'rxjs';
+import {Skeleton} from 'primeng/skeleton';
 
 @Component({
   selector: 'app-user-component',
@@ -17,7 +19,8 @@ import {NgStyle} from '@angular/common';
     InputText,
     RouterLink,
     TableModule,
-    NgStyle
+    NgStyle,
+    Skeleton
   ],
   templateUrl: './user-component.html',
   styleUrl: './user-component.sass'
@@ -31,12 +34,15 @@ export class UserComponent {
   first: number = 0;
   page = signal(0);
   size = signal(10);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   userList: WritableSignal<UserList> = signal({currentPage: 0, totalPages: 0, totalItems: 0, users: []});
 
   constructor() {
     effect(() => {
-      this.userService.getUserList(this.page(), this.size()).subscribe(data => {
+      this.userService.getUserList(this.page(), this.size()).pipe(
+        finalize(() => this.isLoading.set(false))
+      ).subscribe(data => {
         this.userList.set(data);
       })
     });

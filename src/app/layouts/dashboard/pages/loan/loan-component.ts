@@ -11,6 +11,8 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {Tag} from 'primeng/tag';
 import {resourceStatus} from '../../../../data/resource-status';
 import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
+import {Skeleton} from 'primeng/skeleton';
+import {finalize} from 'rxjs';
 
 @Component({
   selector: 'app-loan',
@@ -23,7 +25,8 @@ import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
     DatePipe,
     RouterLink,
     Tag,
-    LoanStatusPipe
+    LoanStatusPipe,
+    Skeleton
   ],
   templateUrl: './loan-component.html',
   styleUrl: './loan-component.sass'
@@ -33,6 +36,7 @@ export class LoanComponent {
   first: number = 0;
   page = signal(0);
   size = signal(10);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   loanService: LoanService = inject(LoanService);
   private confirmationService = inject(ConfirmationService);
@@ -42,7 +46,9 @@ export class LoanComponent {
 
   constructor() {
     effect(() => {
-      this.loanService.getLoanList(this.page(), this.size()).subscribe(data => this.loanList.set(data));
+      this.loanService.getLoanList(this.page(), this.size()).pipe(
+        finalize(() => this.isLoading.set(false))
+      ).subscribe(data => this.loanList.set(data));
     });
   }
 

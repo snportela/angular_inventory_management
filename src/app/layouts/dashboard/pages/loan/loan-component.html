@@ -11,7 +11,9 @@
     [paginator]="true"
     [rows]="size()"
     [globalFilterFields]="['studentName, loanStatus']"
-    [tableStyle]="{ 'min-width': '50rem' }">
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [loading]="isLoading()"
+    >
 
       <ng-template #caption>
         <div class="table-caption">
@@ -40,6 +42,23 @@
             Status <p-sortIcon field="loanStatus"/>
           </th>
           <th >Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #loadingbody>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+        </tr>
+        <tr>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
         </tr>
       </ng-template>
 
