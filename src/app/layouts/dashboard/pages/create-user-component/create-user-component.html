@@ -37,7 +37,7 @@
     <div class="input-box-container">
       <div class="input-box">
         <label>Senha</label>
-        <p-password fluid [toggleMask]="true" formControlName="password"/>
+        <p-password fluid [toggleMask]="true" feedback="false" formControlName="password"/>
         @if(createUserForm.controls['password'].touched) {
           <div class="form-error">
             @if (createUserForm.controls['password'].errors?.['pattern']) {
@@ -52,7 +52,7 @@
 
       <div class="input-box">
         <label>Confirmar senha</label>
-        <p-password fluid [toggleMask]="true" formControlName="confirmPassword" />
+        <p-password fluid [toggleMask]="true" feedback="false" formControlName="confirmPassword" />
         @if(createUserForm.controls['confirmPassword'].touched) {
           <div class="form-error">
             @if (createUserForm.controls['confirmPassword'].errors?.['required']) {
