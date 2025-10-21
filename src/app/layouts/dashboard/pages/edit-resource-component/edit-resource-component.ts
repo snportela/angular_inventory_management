@@ -78,8 +78,8 @@ export class EditResourceComponent {
     serialNumber: new FormControl(""),
     manufactureYear: new FormControl(""),
     useTime: new FormControl("", Validators.required),
-    receipt: new FormControl(""),
-    price: new FormControl(""),
+    receipt: new FormControl(null),
+    price: new FormControl(null),
     observation: new FormControl("")
   });
 
