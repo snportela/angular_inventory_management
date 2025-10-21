@@ -101,7 +101,7 @@
           </td>
           <td>{{ resource.useTime | useTime }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px', 'padding-bottom': '15px', 'padding-top': '15px'}">
-            <button class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
+            <button [routerLink]="['/dashboard/item/', resource.resourceId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
             <button class="delete-button" (click)="confirmDelete(resource)"><i class="pi pi-trash" style="color: red"></i></button>
           </td>
         </tr>
