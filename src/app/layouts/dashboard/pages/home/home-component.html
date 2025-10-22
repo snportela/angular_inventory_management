@@ -1,6 +1,10 @@
 <div class="home">
   <div class="dashboard-header">
-    <h2>Bem vindo (a), {{userName()}} </h2>
+    @if (isLoading()) {
+      <p-skeleton [ngStyle]="{'left': '30px', 'top': '5px'}" width="15rem"/>
+    } @else {
+      <h2>Bem vindo (a), {{userName()}} </h2>
+    }
   </div>
 
   <div [ngStyle]="{'height': '45vh'}" class="dashboard-table">
@@ -134,8 +138,6 @@
             </td>
           </tr>
         </ng-template>
-
-
 
     </p-table>
 
