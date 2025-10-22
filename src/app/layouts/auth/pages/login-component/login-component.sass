@@ -1,7 +1,6 @@
 .login
   background-color: darkslategrey
   height: 100vh
-  padding: 50px
   display: flex
   align-items: center
   position: relative
@@ -18,38 +17,40 @@
 
   .login-form
     background-color: white
-    max-width: 40%
-    height: 80vh
+    max-width: 90%
+    height: 70vh
     margin: auto
     border-radius: 32px
-    padding: 24px
+    padding: 16px
     display: flex
     flex-direction: column
-    gap: 16px
+    gap: 32px
     justify-content: center
     flex: 1
 
-    .input-box
-      display: flex
-      flex-direction: column
-      gap: 6px
+    .input-box-container
 
-      label
-        font-size: 20px
+      .input-box
+        display: flex
+        flex-direction: column
+        gap: 6px
 
-      input
-        line-height: 32px
-        font-size: 18px
-        padding: 5px 10px
-        border-radius: 14px
-        border: 1px solid lightgray
+        label
+          font-size: 20px
 
-        &:hover
-          border: 1px solid #94a3b8
+        input
+          line-height: 32px
+          font-size: 18px
+          padding: 5px 10px
+          border-radius: 14px
+          border: 1px solid lightgray
 
-        &:focus
-          border: 1px solid #94a3b8
-          outline: none
+          &:hover
+            border: 1px solid #94a3b8
+
+          &:focus
+            border: 1px solid #94a3b8
+            outline: none
 
     a
       margin: 0 auto
@@ -76,3 +77,12 @@
     position: absolute
     left: 50%
     transform: translateX(-50%)
+
+@media screen and (min-width: 1024px)
+  .login
+    height: 100vh
+    padding: 50px
+
+    .login-form
+      max-width: 40%
+      padding: 24px

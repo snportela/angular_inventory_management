@@ -8,32 +8,34 @@
       </div>
 
 
-      <div class="input-box">
-        <label for="email">E-mail</label>
-        <input formControlName="email" type="email" autocomplete="true" placeholder="Digite seu e-mail"/>
-        @if(loginForm.controls['email'].touched) {
-          <div class="form-error">
-            @if (loginForm.controls['email'].errors?.['required']) {
-              <span>Campo de e-mail é obrigatório</span>
-            }
-          </div>
-        }
-      </div>
+      <div class="input-box-container">
+        <div class="input-box">
+          <label for="email">E-mail</label>
+          <input formControlName="email" type="email" autocomplete="true" placeholder="Digite seu e-mail"/>
+          @if(loginForm.controls['email'].touched) {
+            <div class="form-error">
+              @if (loginForm.controls['email'].errors?.['required']) {
+                <span>Campo de e-mail é obrigatório</span>
+              }
+            </div>
+          }
+        </div>
 
-      @if (isLoading()) {
-        <p-progress-spinner ariaLabel="loading" />
-      }
-
-      <div class="input-box">
-        <label for="password">Senha</label>
-        <input formControlName="password" type="password" autocomplete="true" placeholder="Digite sua senha"/>
-        @if(loginForm.controls['password'].touched) {
-          <div class="form-error">
-            @if(loginForm.controls['password'].errors?.['required']) {
-              <span>Campo de senha é obrigatório</span>
-            }
-          </div>
+        @if (isLoading()) {
+          <p-progress-spinner ariaLabel="loading" />
         }
+
+        <div class="input-box">
+          <label for="password">Senha</label>
+          <input formControlName="password" type="password" autocomplete="true" placeholder="Digite sua senha"/>
+          @if(loginForm.controls['password'].touched) {
+            <div class="form-error">
+              @if(loginForm.controls['password'].errors?.['required']) {
+                <span>Campo de senha é obrigatório</span>
+              }
+            </div>
+          }
+        </div>
       </div>
 
       @if (isInvalid()) {
@@ -44,7 +46,7 @@
 
       <a routerLink="/redefinir-senha">Esqueceu sua senha?</a>
 
-      <button type="button" (click)="onSubmit()">Entrar</button>
+      <button type="submit" (click)="onSubmit()">Entrar</button>
     </form>
 
 </div>
