@@ -1,15 +1,19 @@
-<nav class="sidebar">
+<nav class="sidebar" [class.mobile-open]="isMenuOpen">
   <div class="sidebar-header">
+    @if (isSmallScreen()) {
+      <button (click)="toggleMenu()" class="toggle-button"><i class="pi pi-times"></i></button>
+    }
     <h3>Inventário VO</h3>
   </div>
   <ul class="nav-menu">
     @for (item of items; track $index) {
       <li>
         <a
+       (click)="toggleMenu()"
         routerLink="{{item.routeLink}}"
         routerLinkActive="active"
         >
-          {{item.label}}
+         <i class="pi {{item.icon}}"></i> {{item.label}}
         </a>
       </li>
     }
@@ -25,3 +29,12 @@
   </a>
 
 </nav>
+
+<div [class.overlay]="isMenuOpen"></div>
+
+@if (isSmallScreen() && !isMenuOpen) {
+  <button (click)="toggleMenu()" class="open-menu">
+    <i class="pi pi-bars"></i>
+  </button>
+}
+

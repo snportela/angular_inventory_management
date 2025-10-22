@@ -7,8 +7,24 @@
   position: relative
 
   .sidebar-header
+    display: flex
+    align-items: center
+    gap: 8px
+    margin: 0 0 30px 0
+    padding: 10px
+
+    .toggle-button
+      background-color: transparent
+      color: white
+      border: none
+      padding: 6px
+
+      &:hover
+        background-color: white
+        color: #020617
+        border-radius: 50%
+
     h3
-      margin: 0 0 30px 0
       text-align: center
 
   .nav-menu
@@ -21,7 +37,9 @@
   a
     color: white
     text-decoration: none
-    display: block
+    display: flex
+    align-items: center
+    gap: 8px
     padding: 10px
     border-radius: 5px
     font-weight: 500
@@ -36,3 +54,35 @@
     bottom: 20px
     left: 20px
     right: 20px
+
+@media (max-width: 958px)
+  .sidebar
+    width: 60%
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 1000
+
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    transform: translateX(-100%)
+
+    &.mobile-open
+      transform: translateX(0)
+
+  .overlay
+    content: ""
+    background-color: #0A0A0A74
+    position: fixed
+    top: 0
+    right: 0
+    width: 100%
+    height: 100%
+    z-index: 998
+
+  .open-menu
+    position: absolute
+    background: none
+    border: none
+    outline: none
+    width: 50px
+    height: 50px
