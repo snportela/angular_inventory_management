@@ -9,10 +9,11 @@ import {DatePipe, NgStyle} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Tag} from 'primeng/tag';
-import {resourceStatus} from '../../../../data/resource-status';
+import {loanStatus} from '../../../../data/loan-status';
 import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
 import {Skeleton} from 'primeng/skeleton';
 import {finalize} from 'rxjs';
+import {MultiSelect} from 'primeng/multiselect';
 
 @Component({
   selector: 'app-loan',
@@ -26,7 +27,8 @@ import {finalize} from 'rxjs';
     RouterLink,
     Tag,
     LoanStatusPipe,
-    Skeleton
+    Skeleton,
+    MultiSelect
   ],
   templateUrl: './loan-component.html',
   styleUrl: './loan-component.sass'
@@ -37,6 +39,8 @@ export class LoanComponent {
   page = signal(0);
   size = signal(10);
   isLoading: WritableSignal<boolean> = signal(true);
+
+  readonly loanStatus = loanStatus;
 
   loanService: LoanService = inject(LoanService);
   private confirmationService = inject(ConfirmationService);
@@ -92,6 +96,4 @@ export class LoanComponent {
       }
     })
   }
-
-  protected readonly status = resourceStatus;
 }

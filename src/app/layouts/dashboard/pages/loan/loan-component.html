@@ -10,7 +10,7 @@
     stripedRows
     [paginator]="true"
     [rows]="size()"
-    [globalFilterFields]="['studentName, loanStatus']"
+    [globalFilterFields]="['studentName', 'loanStatus', 'loanDate', 'dueDate']"
     [tableStyle]="{ 'min-width': '50rem' }"
     [loading]="isLoading()"
     >
@@ -27,6 +27,8 @@
         </div>
       </ng-template>
 
+
+
       <ng-template #header>
         <tr>
           <th pSortableColumn="studentName">
@@ -42,6 +44,27 @@
             Status <p-sortIcon field="loanStatus"/>
           </th>
           <th >Ações</th>
+        </tr>
+
+        <tr>
+          <th>
+            <p-columnFilter showMenu="false" type="text" field="studentName" placeholder="Buscar por nome" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+            <p-columnFilter field="loanStatus" placeholder="Todos" [showMenu]="false" matchMode="in">
+              <ng-template #filter let-value let-filter="filterCallback">
+                <p-multiselect [options]="loanStatus" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
+                </p-multiselect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+
+          <th></th>
+
         </tr>
       </ng-template>
 
@@ -65,7 +88,7 @@
       <ng-template #body let-loan>
         <tr>
           <td>{{ loan.studentName }}</td>
-          <td>{{ loan.loanDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ loan.loanDate | date: 'dd/MM/yyyy'}}</td>
           <td>{{ loan.dueDate | date: 'dd/MM/yyyy' }}</td>
           <td>
             <p-tag [value]="loan.loanStatus | loanStatus" [severity]="loan.loanStatus | loanStatus: true" />
