@@ -39,22 +39,24 @@ export class SidebarComponent {
       label: 'Inventário',
     },
     {
-      routeLink: 'areas',
-      icon: 'pi-objects-column',
-      label: 'Áreas',
+      routeLink: 'emprestimos',
+      icon: 'pi-calendar',
+      label: 'Empréstimos',
     },
     {
       routeLink: 'categorias',
       icon: 'pi-table',
       label: 'Categorias',
-    },{
-      routeLink: 'emprestimos',
-      icon: 'pi-calendar',
-      label: 'Empréstimos',
-    },{
+    },
+    {
       routeLink: 'notas-fiscais',
       icon: 'pi-book',
       label: 'Notas Fiscais',
+    },
+    {
+      routeLink: 'areas',
+      icon: 'pi-objects-column',
+      label: 'Áreas',
     }
   ];
 
