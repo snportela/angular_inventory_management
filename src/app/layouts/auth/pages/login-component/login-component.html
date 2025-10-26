@@ -27,7 +27,7 @@
 
         <div class="input-box">
           <label for="password">Senha</label>
-          <input formControlName="password" type="password" autocomplete="true" placeholder="Digite sua senha"/>
+          <p-password [toggleMask]="true" fluid feedback="false" formControlName="password" autocomplete="true" placeholder="Digite sua senha"/>
           @if(loginForm.controls['password'].touched) {
             <div class="form-error">
               @if(loginForm.controls['password'].errors?.['required']) {

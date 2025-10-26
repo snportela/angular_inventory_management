@@ -7,6 +7,7 @@ import {Router, RouterLink} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {ProgressSpinner} from 'primeng/progressspinner';
 import {Message} from 'primeng/message';
+import {Password} from 'primeng/password';
 
 @Component({
   selector: 'app-login-component',
@@ -15,7 +16,8 @@ import {Message} from 'primeng/message';
     ReactiveFormsModule,
     ProgressSpinner,
     Message,
-    RouterLink
+    RouterLink,
+    Password
   ],
   templateUrl: './login-component.html',
   styleUrl: './login-component.sass'
