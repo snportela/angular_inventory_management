@@ -32,17 +32,14 @@
           <th pSortableColumn="name">
             Nome <p-sortIcon field="name"/>
           </th>
-          <th pSortableColumn="area.name">
-            Área <p-sortIcon field="area.name"/>
+          <th pSortableColumn="serialNumber">
+            Nº de Série <p-sortIcon field="serialNumber"/>
           </th>
-          <th pSortableColumn="category.name">
-            Categoria <p-sortIcon field="category.name"/>
+          <th pSortableColumn="resourceNumber">
+            Nº do Patrimônio <p-sortIcon field="resourceNumber"/>
           </th>
           <th pSortableColumn="status">
             Status <p-sortIcon field="status"/>
-          </th>
-          <th pSortableColumn="useTime">
-            Tempo de uso <p-sortIcon field="useTime"/>
           </th>
           <th >Ações</th>
         </tr>
@@ -53,36 +50,17 @@
           </th>
 
           <th>
-            <p-columnFilter field="area.name" matchMode="in" [showMenu]="false">
-              <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="areas().areas" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
-                </p-multiselect>
-              </ng-template>
-            </p-columnFilter>
+            <p-columnFilter showMenu="false" type="text" field="serialNumber" placeholder="Buscar Nº série" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
           </th>
 
           <th>
-            <p-columnFilter field="category.name" matchMode="in" [showMenu]="false">
-              <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="categories().categories" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="name" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
-                </p-multiselect>
-              </ng-template>
-            </p-columnFilter>
+            <p-columnFilter showMenu="false" type="text" field="resourceNumber" placeholder="Buscar Nº patrimônio" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
           </th>
 
           <th>
             <p-columnFilter field="status" matchMode="in" [showMenu]="false">
               <ng-template #filter let-value let-filter="filterCallback">
                 <p-multiselect [options]="status" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
-                </p-multiselect>
-              </ng-template>
-            </p-columnFilter>
-          </th>
-
-          <th>
-            <p-columnFilter field="useTime" matchMode="in" [showMenu]="false">
-              <ng-template #filter let-value let-filter="filterCallback">
-                <p-multiselect [options]="useTime" placeholder="Todos" (onChange)="filter($event.value)" optionLabel="translation" optionValue="name" style="min-width: 10rem" [panelStyle]="{ minWidth: '16rem'}" appendTo="body">
                 </p-multiselect>
               </ng-template>
             </p-columnFilter>
@@ -99,10 +77,8 @@
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
-          <td><p-skeleton/></td>
         </tr>
         <tr>
-          <td><p-skeleton/></td>
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
@@ -114,12 +90,11 @@
       <ng-template #body let-resource>
         <tr>
           <td [routerLink]="['/dashboard/item/', resource.resourceId]" class="linked-item">{{ resource.name }}</td>
-          <td>{{ resource.area.name }}</td>
-          <td>{{ resource.category.name }}</td>
+          <td>{{ resource.serialNumber }}</td>
+          <td>{{ resource.resourceNumber}}</td>
           <td>
             <p-tag [value]="resource.status | status" [severity]="resource.status | status: true" />
           </td>
-          <td>{{ resource.useTime | useTime }}</td>
           <td [ngStyle]="{'display': 'flex', 'gap': '5px', 'padding-bottom': '15px', 'padding-top': '15px'}">
             <button [routerLink]="['/dashboard/item/', resource.resourceId]" class="edit-button"><i class="pi pi-pencil" style="color: #0f172a"></i></button>
             <button class="delete-button" (click)="confirmDelete(resource)"><i class="pi pi-trash" style="color: red"></i></button>
