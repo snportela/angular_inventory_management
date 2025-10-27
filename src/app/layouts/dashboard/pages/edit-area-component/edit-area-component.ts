@@ -66,25 +66,46 @@ export class EditAreaComponent {
   }
 
   onSubmit() {
-    if (this.areaForm.invalid) return;
+    if (this.areaForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Preencha os campos necessários.',
+        life: 1500
+      });
+      return;
+    }
 
     const data = this.areaForm.value as Omit<Area, 'id'>;
     this.isLoading.set(true);
 
     if (this.isEdit()) {
       this.areaService.updateArea(this.areaId()!, data).subscribe({
-        next: area => this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: `Área atualizada com sucesso.`,
-          life: 1500
-        }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível editar a Área.',
-          life: 1500
-        })
+        next: area => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: `Área atualizada com sucesso.`,
+            life: 1500
+          })
+        },
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Uma Área com este nome já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível editar a Área.',
+              life: 1500
+            })
+          }
+        }
       });
     } else {
       this.areaService.createArea(data).subscribe({
@@ -94,12 +115,23 @@ export class EditAreaComponent {
           detail: `Área criada com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível criar a Área.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Uma Área com este nome já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível criar a Área.',
+              life: 1500
+            })
+          }
+        }
       });
     }
 

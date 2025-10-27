@@ -68,7 +68,15 @@ export class EditUserComponent {
   }
 
   onSubmit() {
-    if(this.editUserForm.invalid) return;
+    if(this.editUserForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Preencha os campos necessários.',
+        life: 1500
+      });
+      return;
+    }
     this.isLoading.set(true);
 
     const data = this.editUserForm.value as Omit<User, 'userId'>;

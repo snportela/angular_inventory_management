@@ -67,7 +67,15 @@ export class EditCategoryComponent {
   }
 
   onSubmit() {
-    if(this.categoryForm.invalid) return;
+    if(this.categoryForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Preencha os campos necessários.',
+        life: 1500
+      });
+      return;
+    }
 
     const data = this.categoryForm.value as Omit<Category, 'id'>;
     this.isLoading.set(true);
@@ -80,12 +88,23 @@ export class EditCategoryComponent {
           detail: `Categoria atualizada com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível editar a Categoria.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Uma Categoria com este nome já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível atualizar a Categoria.',
+              life: 1500
+            })
+          }
+        }
       });
     } else {
       this.categoryService.createCategory(data).subscribe({
@@ -95,12 +114,23 @@ export class EditCategoryComponent {
           detail: `Categoria criada com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível criar a Categoria.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Uma Categoria com este nome já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível criar a Categoria.',
+              life: 1500
+            })
+          }
+        }
       });
     }
 

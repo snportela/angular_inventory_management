@@ -123,9 +123,17 @@ export class EditResourceComponent {
     });
   }
 
-
   onSubmit() {
-    if (this.resourceForm.invalid) return;
+    if (this.resourceForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Preencha os campos necessários.',
+        life: 1500
+      });
+      return;
+    }
+
     this.isLoading.set(true);
 
     const data = this.resourceForm.getRawValue() as Omit<Resource, 'resourceId'>;
@@ -138,12 +146,23 @@ export class EditResourceComponent {
           detail: `Item atualizado com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível editar o Item.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: err,
+              detail: 'Um Item com este nome já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível criar o Item.',
+              life: 1500
+            })
+          }
+        }
       });
     } else {
       this.resourceService.createResource(data).subscribe({
@@ -153,12 +172,23 @@ export class EditResourceComponent {
           detail: `Item criado com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível criar o Item.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Um Item com este nome já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível editar o Item.',
+              life: 1500
+            })
+          }
+        }
       });
     }
 

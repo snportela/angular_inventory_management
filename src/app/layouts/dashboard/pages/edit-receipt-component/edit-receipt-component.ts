@@ -73,8 +73,16 @@ export class EditReceiptComponent {
   }
 
   onSubmit() {
+    if(this.receiptForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'Preencha os campos necessários.',
+        life: 1500
+      });
+      return;
+    }
 
-    if(this.receiptForm.invalid) return;
     this.isLoading.set(true);
 
     const formValue = this.receiptForm.getRawValue();
@@ -94,12 +102,23 @@ export class EditReceiptComponent {
           detail: `Nota Fiscal atualizada com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível editar a Nota Fiscal.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Uma Nota Fiscal com este número já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível editar a Nota Fiscal.',
+              life: 1500
+            })
+          }
+        }
       });
     } else {
       this.receiptService.createReceipt(payload).subscribe({
@@ -109,12 +128,23 @@ export class EditReceiptComponent {
           detail: `Nota Fiscal criada com sucesso.`,
           life: 1500
         }),
-        error: err => this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Não foi possível criar a Nota Fiscal.',
-          life: 1500
-        })
+        error: err => {
+          if(err.status == 409) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Uma Nota Fiscal com este número já existe.',
+              life: 1500
+            })
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Não foi possível criar a Nota Fiscal.',
+              life: 1500
+            })
+          }
+        }
       });
     }
 
