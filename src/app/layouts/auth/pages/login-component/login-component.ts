@@ -1,5 +1,5 @@
 import {Component, inject, signal, WritableSignal} from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
+import { NgOptimizedImage, NgStyle } from '@angular/common';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../../services/auth-service';
 import {Login} from '../../../../models/auth/login';
@@ -17,8 +17,9 @@ import {Password} from 'primeng/password';
     ProgressSpinner,
     Message,
     RouterLink,
-    Password
-  ],
+    Password,
+    NgStyle
+],
   templateUrl: './login-component.html',
   styleUrl: './login-component.sass'
 })

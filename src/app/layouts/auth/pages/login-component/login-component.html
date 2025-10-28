@@ -22,7 +22,7 @@
         </div>
 
         @if (isLoading()) {
-          <p-progress-spinner ariaLabel="loading" />
+          <p-progress-spinner [ngStyle]="{'zIndex': '100'}" ariaLabel="loading" />
         }
 
         <div class="input-box">
