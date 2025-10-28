@@ -79,6 +79,7 @@ export class EditResourceComponent {
     serialNumber: new FormControl(""),
     manufactureYear: new FormControl(""),
     useTime: new FormControl("", Validators.required),
+    location: new FormControl(""),
     receipt: new FormControl(null),
     price: new FormControl(null),
     observation: new FormControl("")
@@ -111,6 +112,7 @@ export class EditResourceComponent {
             repairState: r.repairState,
             status: r.status,
             useTime: r.useTime,
+            location: r.location,
             description: r.description,
             resourceNumber: r.resourceNumber,
             serialNumber: r.serialNumber,
