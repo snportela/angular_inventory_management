@@ -29,11 +29,6 @@ export class SidebarComponent {
 
   items = [
     {
-      routeLink: 'home',
-      icon: 'pi-home',
-      label: 'Home',
-    },
-    {
       routeLink: 'inventario',
       icon: 'pi-warehouse',
       label: 'Inventário',

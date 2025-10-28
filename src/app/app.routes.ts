@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {HomeComponent} from './layouts/dashboard/pages/home/home-component';
 import {Auth} from './layouts/auth/auth';
 import {Dashboard} from './layouts/dashboard/dashboard';
 import {AreaComponent} from './layouts/dashboard/pages/area/area-component';
@@ -34,8 +33,7 @@ export const routes: Routes = [
   {
     path: 'dashboard', component: Dashboard,
     children: [
-      {path: '', redirectTo: '/dashboard/home', pathMatch: 'full'},
-      {path: 'home', component: HomeComponent},
+      {path: '', redirectTo: '/dashboard/inventario', pathMatch: 'full'},
       {path: 'areas', component: AreaComponent},
       {path: 'area', component: EditAreaComponent},
       {path: 'area/:id', component: EditAreaComponent},
