@@ -16,7 +16,6 @@ import {CategoryList} from '../../../../models/category/category-list';
 import {StatusPipe} from '../../../../pipes/status-pipe';
 import {resourceStatus} from '../../../../data/resource-status';
 import {useTime} from '../../../../data/use-time';
-import {UseTimePipe} from '../../../../pipes/use-time-pipe';
 import {AreaList} from '../../../../models/area/area-list';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Tag} from 'primeng/tag';
@@ -35,7 +34,6 @@ import {finalize} from 'rxjs';
     MultiSelect,
     RouterLink,
     StatusPipe,
-    UseTimePipe,
     Tag,
     Skeleton
   ],
