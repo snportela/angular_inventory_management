@@ -14,6 +14,8 @@
       [globalFilterFields]="['name', 'email']"
       [tableStyle]="{ 'min-width': '50rem' }"
       [loading]="isLoading()"
+      [scrollable]="true"
+      [scrollHeight]="isHDScreen() ? '70vh' : '80vh'"
     >
 
       <ng-template #caption>

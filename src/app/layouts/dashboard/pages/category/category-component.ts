@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, Signal, signal, WritableSignal} from '@angular/core';
 import {CategoryService} from '../../../../services/category-service';
 import {CategoryList} from '../../../../models/category/category-list';
 import {TableModule} from 'primeng/table';
@@ -10,6 +10,8 @@ import {RouterLink} from '@angular/router';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Skeleton} from 'primeng/skeleton';
 import {finalize} from 'rxjs';
+import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-category',
@@ -30,13 +32,20 @@ export class CategoryComponent {
   categoryService: CategoryService = inject(CategoryService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  private breakpointObserver = inject(BreakpointObserver);
 
   first: number = 0;
   page = signal(0);
-  size = signal(10);
+  size = signal(20);
   isLoading: WritableSignal<boolean> = signal(true);
 
   categoryList: WritableSignal<CategoryList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, categories: []});
+
+  private breakpointState: Signal<BreakpointState | undefined> = toSignal( this.breakpointObserver.observe([
+    Breakpoints.Large
+  ]));
+
+  public isHDScreen: Signal<boolean> = computed(() => this.breakpointState()?.matches ?? false);
 
   constructor() {
     effect(() => {

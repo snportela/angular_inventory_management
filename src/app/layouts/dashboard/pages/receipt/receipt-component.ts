@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, Signal, signal, WritableSignal} from '@angular/core';
 import {ReceiptService} from '../../../../services/receipt-service';
 import {ReceiptList} from '../../../../models/receipt/receipt-list';
 import {IconField} from 'primeng/iconfield';
@@ -10,6 +10,8 @@ import {CurrencyPipe, DatePipe, NgStyle} from '@angular/common';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {Skeleton} from 'primeng/skeleton';
 import {finalize} from 'rxjs';
+import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-receipt',
@@ -32,14 +34,21 @@ export class ReceiptComponent {
   receiptService: ReceiptService = inject(ReceiptService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  private breakpointObserver = inject(BreakpointObserver);
 
   first: number = 0;
   page = signal(0);
-  size = signal(10);
+  size = signal(20);
   isLoading: WritableSignal<boolean> = signal(true);
 
   receiptList: WritableSignal<ReceiptList
   > =  signal({currentPage: 0, totalItems: 0, totalPages: 0, receipts: [] });
+
+  private breakpointState: Signal<BreakpointState | undefined> = toSignal( this.breakpointObserver.observe([
+    Breakpoints.Large
+  ]));
+
+  public isHDScreen: Signal<boolean> = computed(() => this.breakpointState()?.matches ?? false);
 
   constructor() {
     effect(() => {

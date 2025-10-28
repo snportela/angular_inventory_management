@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, Signal, signal, WritableSignal} from '@angular/core';
 import {TableModule} from 'primeng/table';
 import {LoanService} from '../../../../services/loan-service';
 import {LoanList} from '../../../../models/loan/loan-list';
@@ -14,6 +14,8 @@ import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
 import {Skeleton} from 'primeng/skeleton';
 import {finalize} from 'rxjs';
 import {MultiSelect} from 'primeng/multiselect';
+import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-loan',
@@ -45,8 +47,15 @@ export class LoanComponent {
   loanService: LoanService = inject(LoanService);
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
+  private breakpointObserver = inject(BreakpointObserver);
 
   loanList: WritableSignal<LoanList> = signal({currentPage: 0, totalItems: 0, totalPages: 0, loans: [] });
+
+  private breakpointState: Signal<BreakpointState | undefined> = toSignal( this.breakpointObserver.observe([
+    Breakpoints.Large
+  ]));
+
+  public isHDScreen: Signal<boolean> = computed(() => this.breakpointState()?.matches ?? false);
 
   constructor() {
     effect(() => {

@@ -1,4 +1,4 @@
-import {Component, effect, inject, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, signal, Signal, WritableSignal} from '@angular/core';
 import {ResourceService} from '../../../../services/resource-service';
 import {ResourceList} from '../../../../models/resource/resource-list';
 import {TableModule} from 'primeng/table';
@@ -21,6 +21,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {Tag} from 'primeng/tag';
 import {Skeleton} from 'primeng/skeleton';
 import {finalize} from 'rxjs';
+import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-resource',
@@ -50,18 +51,21 @@ export class ResourceComponent {
 
   first: number = 0;
   page = signal(0);
-  size = signal(10);
+  size = signal(50);
   isLoading: WritableSignal<boolean> = signal(true);
+  private breakpointObserver = inject(BreakpointObserver);
 
   resourceList: WritableSignal<ResourceList> =  signal({currentPage: 0, totalItems: 0, totalPages: 0, resources: [] });
 
   areas: Signal<AreaList> = toSignal(this.areaService.getAreaList(this.page(), this.size()), {initialValue: {} as AreaList});
 
-  categories: Signal<CategoryList> = toSignal(this.categoryService.getCategoryList(this.page(), this.size()),
-    {initialValue: {} as CategoryList});
-
   status = resourceStatus;
-  useTime = useTime;
+
+  private breakpointState: Signal<BreakpointState | undefined> = toSignal( this.breakpointObserver.observe([
+    Breakpoints.Large
+  ]));
+
+  public isHDScreen: Signal<boolean> = computed(() => this.breakpointState()?.matches ?? false);
 
   constructor() {
     effect(() => {

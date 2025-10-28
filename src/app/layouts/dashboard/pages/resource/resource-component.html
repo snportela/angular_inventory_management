@@ -13,6 +13,8 @@
     [globalFilterFields]="['name', 'area.name', 'category.name', 'status', 'useTime']"
     [tableStyle]="{ 'min-width': '50rem'}"
     [loading]="isLoading()"
+    [scrollable]="true"
+    [scrollHeight]="isHDScreen() ? '70vh' : '80vh'"
     >
 
       <ng-template #caption>

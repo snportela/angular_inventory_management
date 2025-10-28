@@ -16,5 +16,6 @@ export interface Resource {
   resourceNumber: string,
   status: string,
   observation: string,
-  useTime: string
+  useTime: string,
+  location: string
 }
