@@ -24,6 +24,7 @@ import {CurrencyMaskDirective} from '../../../../directives/currency-mask';
 import {MessageService} from 'primeng/api';
 import {Button} from 'primeng/button';
 import {Select} from 'primeng/select';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-resource-component',
@@ -146,19 +147,28 @@ export class EditResourceComponent {
           detail: `Item atualizado com sucesso.`,
           life: 1500
         }),
-        error: err => {
+        error:( err: HttpErrorResponse) => {
           if(err.status == 409) {
+
+            let message = err.error.message.slice(21).split(" ");
+            let param;
+            if(message[1] == "number") {
+              param = "número de patrimônio"
+            } else {
+              param = "nome"
+            }
+
             this.messageService.add({
               severity: 'error',
-              summary: err,
-              detail: 'Um Item com este nome já existe.',
+              summary: 'Erro',
+              detail: `Um Item com este ${param} já existe.`,
               life: 1500
             })
           } else {
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
-              detail: 'Não foi possível criar o Item.',
+              detail: 'Não foi possível editar o Item.',
               life: 1500
             })
           }
@@ -174,17 +184,26 @@ export class EditResourceComponent {
         }),
         error: err => {
           if(err.status == 409) {
+
+            let message = err.error.message.slice(21).split(" ");
+            let param;
+            if(message[1] == "number") {
+              param = "número de patrimônio"
+            } else {
+              param = "nome"
+            }
+
             this.messageService.add({
               severity: 'error',
-              summary: 'Error',
-              detail: 'Um Item com este nome já existe.',
+              summary: 'Erro',
+              detail: `Um Item com este ${param} já existe.`,
               life: 1500
             })
           } else {
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
-              detail: 'Não foi possível editar o Item.',
+              detail: 'Não foi possível criar o Item.',
               life: 1500
             })
           }
