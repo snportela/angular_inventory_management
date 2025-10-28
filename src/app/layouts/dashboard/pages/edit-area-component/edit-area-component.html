@@ -8,7 +8,7 @@
     <div class="input-box">
       <label>Nome</label>
 
-      <input formControlName="name" placeholder="Area"/>
+      <input formControlName="name" />
       @if (areaForm.controls['name'].touched) {
         <div class="form-error">
           @if (areaForm.controls['name'].errors?.['required']) {

@@ -7,9 +7,7 @@
 
     <div class="input-box">
       <label>Nome do Recurso</label>
-      <input formControlName="name"
-             placeholder="Nome do recurso"
-      />
+      <input formControlName="name" />
       @if (resourceForm.controls['name'].touched) {
         <div class="form-error">
           @if (resourceForm.controls['name'].errors?.['required']) {
@@ -46,7 +44,7 @@
 
     <div class="input-box">
       <label>Descrição</label>
-      <textarea formControlName="description" placeholder="Descrição do recurso" rows="3"></textarea>
+      <textarea formControlName="description" rows="3"></textarea>
       @if (resourceForm.controls['description'].touched) {
         <div class="form-error">
           @if (resourceForm.controls['description'].errors?.['required']) {
@@ -95,9 +93,7 @@
     <div class="input-box-container">
       <div class="input-box">
         <label>Ano de fabricação</label>
-        <input formControlName="manufactureYear"
-               placeholder="Exemplo: 2014 ou N/A"
-        />
+        <input formControlName="manufactureYear" />
       </div>
 
       <div class="input-box">
