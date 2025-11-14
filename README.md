@@ -1,13 +1,11 @@
-[English](#english) | [Português](#portugues)
-
-# <a name="english"></a>Angular Inventory Management UI 💻
-
-![ANGULAR_BADGE] ![TYPESCRIPT_BADGE] ![PRIMENG_BADGE] ![SASS_BADGE]
-
 [ANGULAR_BADGE]: https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white
 [TYPESCRIPT_BADGE]: https://img.shields.io/badge/typescript-%233178C6.svg?style=for-the-badge&logo=typescript&logoColor=white
 [PRIMENG_BADGE]: https://img.shields.io/badge/PrimeNG-2266B3?style=for-the-badge&logo=primeng&logoColor=white
 [SASS_BADGE]: https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white
+
+[English](#english) | [Português](#portugues)
+
+# <a name="english"></a>Angular Inventory Management UI 💻
 
 Frontend application for the [Inventory Management System API](https://github.com/snportela/spring_boot__inventory_management), built with Angular, TypeScript, and PrimeNG.
 
@@ -74,8 +72,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ---
 
 # <a name="portugues"></a>UI de Gerenciamento de Inventário com Angular 💻
-
-![ANGULAR_BADGE] ![TYPESCRIPT_BADGE] ![PRIMENG_BADGE] ![SASS_BADGE]
 
 Aplicação frontend para a [API de Sistema de Gerenciamento de Inventário](https://github.com/snportela/spring_boot__inventory_management), construída com Angular, TypeScript e PrimeNG.
 
