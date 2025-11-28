@@ -36,6 +36,9 @@
           <th pSortableColumn="studentName">
             Estudante <p-sortIcon field="studentName"/>
           </th>
+          <th>
+            Item <p-sortIcon/>
+          </th>
           <th pSortableColumn="loanDate">
             Data-Empréstimo<p-sortIcon field="loanDate"/>
           </th>
@@ -51,6 +54,8 @@
         <tr>
           <th>
             <p-columnFilter showMenu="false" type="text" field="studentName" placeholder="Buscar por nome" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
+          </th>
+          <th>
           </th>
           <th>
           </th>
@@ -77,8 +82,10 @@
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
+          <td><p-skeleton/></td>
         </tr>
         <tr>
+          <td><p-skeleton/></td>
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
           <td><p-skeleton/></td>
@@ -90,6 +97,7 @@
       <ng-template #body let-loan>
         <tr>
           <td>{{ loan.studentName }}</td>
+          <td>{{ loan.resourceNames }}</td>
           <td>{{ loan.loanDate | date: 'dd/MM/yyyy'}}</td>
           <td>{{ loan.dueDate | date: 'dd/MM/yyyy' }}</td>
           <td>

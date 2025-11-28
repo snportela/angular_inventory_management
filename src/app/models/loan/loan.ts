@@ -5,5 +5,6 @@ export interface Loan {
   loanDate: string,
   dueDate: string,
   loanStatus: string,
-  observation: string
+  observation: string,
+  resourceNames?: string
 }

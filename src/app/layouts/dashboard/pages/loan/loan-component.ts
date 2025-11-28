@@ -12,7 +12,7 @@ import {Tag} from 'primeng/tag';
 import {loanStatus} from '../../../../data/loan-status';
 import {LoanStatusPipe} from '../../../../pipes/loan-status-pipe';
 import {Skeleton} from 'primeng/skeleton';
-import {finalize} from 'rxjs';
+import {finalize, forkJoin, map, of, switchMap} from 'rxjs';
 import {MultiSelect} from 'primeng/multiselect';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -39,7 +39,7 @@ export class LoanComponent {
 
   first: number = 0;
   page = signal(0);
-  size = signal(10);
+  size = signal(50);
   isLoading: WritableSignal<boolean> = signal(true);
 
   readonly loanStatus = loanStatus;
@@ -59,7 +59,31 @@ export class LoanComponent {
 
   constructor() {
     effect(() => {
+      this.isLoading.set(true);
+
       this.loanService.getLoanList(this.page(), this.size()).pipe(
+        switchMap((loanListData) => {
+          if (loanListData.loans.length === 0) {
+            return of(loanListData);
+          }
+
+          const loansWithItems$ = loanListData.loans.map(loan =>
+            this.loanService.getItemsByLoanId(loan.loanId).pipe(
+              map(items => ({
+                ...loan,
+
+                resourceNames: items.map(i => i.resourceName).join(', ')
+              }))
+            )
+          );
+
+          return forkJoin(loansWithItems$).pipe(
+            map(updatedLoans => ({
+              ...loanListData,
+              loans: updatedLoans
+            }))
+          );
+        }),
         finalize(() => this.isLoading.set(false))
       ).subscribe(data => this.loanList.set(data));
     });
