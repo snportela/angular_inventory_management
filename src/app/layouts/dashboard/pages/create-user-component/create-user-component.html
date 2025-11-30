@@ -44,7 +44,7 @@
               <span>Senha deve conter: Ao menos 8 caracteres, 1 letra maiúscula, 1 número, 1 caractere especial</span>
             }
             @if (createUserForm.controls['password'].errors?.['required']) {
-              <span>Digite sua senha</span>
+              <span>Digite a senha</span>
             }
           </div>
         }
@@ -56,7 +56,7 @@
         @if(createUserForm.controls['confirmPassword'].touched) {
           <div class="form-error">
             @if (createUserForm.controls['confirmPassword'].errors?.['required']) {
-              <span>Confirme sua senha</span>
+              <span>Confirme a senha</span>
             }
             @if (createUserForm.hasError('notSame')) {
               <span>As senhas devem ser iguais</span>
