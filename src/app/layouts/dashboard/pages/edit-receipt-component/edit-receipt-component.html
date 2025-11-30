@@ -9,7 +9,15 @@
     <div class="input-box">
       <label>Nº da Nota Fiscal</label>
       <input formControlName="receiptNumber"/>
+      @if (receiptForm.controls['receiptNumber'].touched) {
+        <div class="form-error">
+          @if (receiptForm.controls['receiptNumber'].errors?.['required']) {
+            <span>Número da Nota Fiscal é obrigatório</span>
+          }
+        </div>
+      }
     </div>
+
 
     <div class="input-box">
       <label>Valor</label>
@@ -18,7 +26,15 @@
              inputmode="decimal"
              placeholder="R$ 0,00"
              appCurrencyMask />
+      @if (receiptForm.controls['price'].touched) {
+        <div class="form-error">
+          @if (receiptForm.controls['price'].errors?.['required']) {
+            <span>Preço da Nota Fiscal é obrigatório</span>
+          }
+        </div>
+      }
     </div>
+
   </div>
 
     <div class="input-box-container">
@@ -26,12 +42,28 @@
       <div class="input-box">
         <label>Empresa</label>
         <input formControlName="supplier"/>
+        @if (receiptForm.controls['supplier'].touched) {
+          <div class="form-error">
+            @if (receiptForm.controls['supplier'].errors?.['required']) {
+              <span>Empresa da Nota Fiscal é obrigatória</span>
+            }
+          </div>
+        }
       </div>
+
 
       <div class="input-box">
         <label>Data da Nota Fiscal</label>
         <p-date-picker formControlName="receiptDate" [showIcon]="true"></p-date-picker>
+        @if (receiptForm.controls['receiptDate'].touched) {
+          <div class="form-error">
+            @if (receiptForm.controls['receiptDate'].errors?.['required']) {
+              <span>Data da Nota Fiscal é obrigatória</span>
+            }
+          </div>
+        }
       </div>
+
     </div>
 
     <div class="input-box">
