@@ -10,7 +10,7 @@
     stripedRows
     [paginator]="true"
     [rows]="size()"
-    [globalFilterFields]="['studentName', 'loanStatus', 'loanDate', 'dueDate']"
+    [globalFilterFields]="['studentName', 'resourceNames', 'loanStatus', 'loanDate', 'dueDate']"
     [tableStyle]="{ 'min-width': '50rem' }"
     [loading]="isLoading()"
     [scrollable]="true"
@@ -56,6 +56,7 @@
             <p-columnFilter showMenu="false" type="text" field="studentName" placeholder="Buscar por nome" ariaLabel="Filter Name" filterOn="input"></p-columnFilter>
           </th>
           <th>
+            <p-columnFilter showMenu="false" type="text" field="resourceNames" placeholder="Buscar por item" ariaLabel="Filter Item" filterOn="input"></p-columnFilter>
           </th>
           <th>
           </th>
