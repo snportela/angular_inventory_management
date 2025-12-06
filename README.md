@@ -9,6 +9,15 @@
 
 Frontend application for the [Inventory Management System API](https://github.com/snportela/spring_boot__inventory_management), built with Angular, TypeScript, and PrimeNG.
 
+Authors: 
+Kayke Lavieri Leite,
+
+Rafael de Melo Santiago,
+
+Shams Ameer Ali Ali Aumraan,
+
+Sophia Nobre Portela
+
 ## 💻 Technologies
 
 ![ANGULAR_BADGE] ![TYPESCRIPT_BADGE] ![PRIMENG_BADGE] ![SASS_BADGE]
